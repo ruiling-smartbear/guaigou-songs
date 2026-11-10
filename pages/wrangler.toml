@@ -1,0 +1,10 @@
+# Cloudflare Pages copy of the site, for networks that cannot reach *.workers.dev.
+#   node tools/build-pages.mjs && cd pages && npx wrangler pages deploy
+name = "guaigou-songs"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"
+
+# /api/* is handed to the existing Worker, which keeps all data, limits and secrets.
+[[services]]
+binding = "API"
+service = "guaigou-songs"
