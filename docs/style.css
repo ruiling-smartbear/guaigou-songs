@@ -437,3 +437,4 @@ textarea { min-height: 220px; resize: vertical; }
   background: var(--tan); color: var(--ink); font-size: 17px; line-height: 1.5; box-shadow: 0 4px 0 rgba(0, 0, 0, .18);
 }
 .netwarn b { display: block; }
+.netwarn .btn { display: flex; margin-top: 10px; min-height: 52px; font-size: 18px; box-shadow: none; }

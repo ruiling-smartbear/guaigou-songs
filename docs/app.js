@@ -174,7 +174,11 @@
     } catch {
       serverOk = false;
       el.hidden = false;
-      el.innerHTML = '<b>现在连不上做歌的服务器</b><span>这个网络可能访问不了它（在国内比较常见）。可以换个网络，比如从流量换成 Wi-Fi，或者过一会儿再试。你写的内容不会丢。</span>';
+      const mirror = (window.GG_CONFIG || {}).mirror;
+      const elsewhere = mirror && !location.href.startsWith(mirror);
+      el.innerHTML = elsewhere
+        ? `<b>这个网址在你的网络下做不了歌</b><span>在国内比较常见。请改用这个网址，功能完全一样：</span><a class="btn dark" href="${mirror}">打开 ${mirror.replace(/^https?:\/\/|\/$/g, '')}</a>`
+        : '<b>现在连不上做歌的服务器</b><span>这个网络可能访问不了它（在国内比较常见）。可以换个网络，比如从流量换成 Wi-Fi，或者过一会儿再试。你写的内容不会丢。</span>';
       setTimeout(checkServer, 20000);
     }
   }
