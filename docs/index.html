@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>怪狗唱片</title>
+  <meta name="theme-color" content="#1a43a3">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="怪狗唱片">
+  <link rel="apple-touch-icon" href="assets/dogs/pug.webp">
+  <link rel="icon" href="assets/dogs/pug.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#/"><img src="assets/dogs/pug.webp" alt=""><span><b>怪狗唱片</b><small>Music made with Suno</small></span></a>
+    <button class="me" id="me" hidden></button>
+  </header>
+  <main class="wrap" id="view" aria-live="polite"></main>
+
+  <div class="player" id="player" aria-label="播放器">
+    <div class="thumb" id="pl-thumb"></div>
+    <div class="meta">
+      <b id="pl-title">—</b>
+      <div class="bar"><span id="pl-cur">0:00</span><input type="range" id="pl-seek" min="0" max="1000" value="0" aria-label="进度"><span id="pl-dur">0:00</span></div>
+    </div>
+    <button class="pp" id="pl-pp" aria-label="播放/暂停"></button>
+    <audio id="audio" preload="metadata"></audio>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="config.js"></script>
+  <script src="styles.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+name = "guaigou-songs"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Storage: Workers KV works on the free plan without a card (1 GB, songs up to 25 MB each).
+[[kv_namespaces]]
+binding = "KV"
+id = "c173794fea884888b55bb0305bd5d172"
+
+# To use R2 instead (10 GB free, but needs a card on file), enable R2 in the dashboard,
+# run `npx wrangler r2 bucket create guaigou-songs`, and swap the block above for:
+# [[r2_buckets]]
+# binding = "BUCKET"
+# bucket_name = "guaigou-songs"
+
+[vars]
+# Your GitHub Pages address, e.g. "https://yourname.github.io"
+ALLOWED_ORIGINS = "https://ruiling-smartbear.github.io"
+DAILY_LYRICS_LIMIT = "60"
+DAILY_SONG_LIMIT = "20"
+# Most songs kept at once; beyond this the oldest finished songs are deleted automatically.
+MAX_SONGS = "100"
+DEEPSEEK_MODEL = "deepseek-chat"
+# Drawings are read by DeepSeek itself (deepseek-chat can see images). To use another
+# OpenAI-compatible vision model instead, set these and the VISION_API_KEY secret:
+# VISION_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+# VISION_MODEL = "qwen-vl-max"
+
+# Secrets (set with `npx wrangler secret put NAME`, never commit them):
+#   DEEPSEEK_API_KEY, FAMILY_KEY, ADMIN_TOKEN, VISION_API_KEY (optional)

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>怪狗唱片 · 待做清单</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/dogs/schnauzer.webp">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-size: 17px; }
+    .wrap { width: min(1180px, 100%); }
+    .tabs { display: flex; gap: 10px; margin: 10px 0 16px; flex-wrap: wrap; align-items: center; }
+    .tabs .chip { min-height: 46px; font-size: 17px; }
+    .drop {
+      display: block; cursor: pointer;
+      border: 3px dashed rgba(255,248,234,.6); border-radius: 18px; color: var(--cream-hi);
+      padding: 18px; text-align: center; margin: 0 0 18px; transition: background .15s;
+    }
+    .drop.over, .job.over { background: rgba(255,248,234,.18); outline: 4px dashed var(--tan); }
+    .job { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 18px; margin-bottom: 16px; }
+    .job .cover { border-radius: 12px; }
+    .job h3 { font-size: 24px; margin: 0; }
+    .meta-line { color: var(--ink-soft); font-size: 15px; }
+    .field { margin: 10px 0; }
+    .field .lab { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+    .field pre {
+      white-space: pre-wrap; margin: 0; background: var(--cream-hi); border-radius: 12px; padding: 10px 12px;
+      font: 15px/1.6 var(--font); max-height: 220px; overflow: auto; border: 1px solid var(--hair);
+    }
+    .mini { min-height: 36px; padding: 0 14px; font-size: 14px; box-shadow: 0 3px 0 rgba(0,0,0,.2); }
+    .job audio { width: 100%; margin: 6px 0; }
+    .progress { height: 8px; border-radius: 4px; background: var(--hair); overflow: hidden; }
+    .progress i { display: block; height: 100%; width: 0; background: var(--green); transition: width .1s; }
+    details summary { cursor: pointer; color: var(--ink-soft); font-size: 15px; }
+    @media (max-width: 700px) { .job { grid-template-columns: 1fr; } .job .cover { max-width: 200px; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="./"><img src="assets/dogs/schnauzer.webp" alt=""><b>待做清单</b></a>
+    <button class="me" id="logout" hidden>退出</button>
+  </header>
+  <main class="wrap" id="view"></main>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

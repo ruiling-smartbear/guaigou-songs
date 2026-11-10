@@ -1,0 +1,8 @@
+.dev.vars
+.data/
+node_modules/
+.wrangler/
+.DS_Store
+tools/.handed.json
+secrets.local.txt
+*.zip

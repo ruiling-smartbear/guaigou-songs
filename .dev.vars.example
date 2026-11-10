@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local testing. MOCK=1 fakes the lyrics so no API key is needed.
+MOCK=1
+DEEPSEEK_API_KEY=
+FAMILY_KEY=wangwang
+ADMIN_TOKEN=dev-admin
