@@ -596,7 +596,10 @@ async function serveFile(env, job, what, download, request) {
 
 function requireFamily(request, env, url) {
   if (!env.FAMILY_KEY) return;
-  const k = request.headers.get('X-Family-Key') || url.searchParams.get('k');
+  // Headers can only carry ASCII, so the site percent-encodes the passphrase (it may be Chinese).
+  let k = request.headers.get('X-Family-Key') || '';
+  try { k = decodeURIComponent(k); } catch {}
+  k = k || url.searchParams.get('k');
   if (k !== env.FAMILY_KEY) throw httpError(401, '暗号不对', true);
 }
 

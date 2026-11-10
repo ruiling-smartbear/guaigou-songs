@@ -71,7 +71,7 @@
     try {
       res = await fetch(API + path, {
         ...opts,
-        headers: { 'Content-Type': 'application/json', 'X-Family-Key': store.get('key', ''), ...(opts.headers || {}) },
+        headers: { 'Content-Type': 'application/json', 'X-Family-Key': encodeURIComponent(store.get('key', '')), ...(opts.headers || {}) },
         body: opts.body ? JSON.stringify(opts.body) : undefined,
       });
     } catch {
