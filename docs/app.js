@@ -80,7 +80,11 @@
     let data = {};
     try { data = await res.json(); } catch {}
     if (!res.ok) {
-      if (res.status === 401) { store.set('key', ''); }
+      if (res.status === 401) {
+        // Wrong passphrase: forget it and go straight back to the page that asks for it.
+        store.set('key', '');
+        setTimeout(() => { render(); toast('口令不对，请再输入一次'); }, 0);
+      }
       // No answer, server trouble or today's limit reached: worth keeping the work and retrying later.
       const busy = res.status >= 500 || res.status === 429;
       throw Object.assign(new Error(data.error || '网络不太好，请再试一次'), { busy });
