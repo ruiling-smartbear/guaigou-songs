@@ -89,6 +89,7 @@ async function route(request, env) {
   if (p.startsWith('/api/admin/')) {
     requireAdmin(request, env, url);
     if (p === '/api/admin/jobs' && m === 'GET') return json(await listJobs(env));
+    if (p === '/api/admin/quota' && m === 'PUT') return json(quotaView(await editQuota(env, await readJson(request))));
     if (p === '/api/admin/pulse' && m === 'GET') {
       const o = await env.BUCKET.get('meta/pulse');
       return json({ pulse: o ? await o.text() : '0' });
@@ -104,11 +105,12 @@ async function route(request, env) {
   }
 
   requireFamily(request, env, url);
+  if (p === '/api/quota' && m === 'GET') return json(quotaView(await getQuota(env)));
   if (p === '/api/lyrics' && m === 'POST') return json(await writeLyrics(env, await readJson(request)));
   if (p === '/api/jobs' && m === 'POST') {
     const job = await createJob(env, await readJson(request), request);
     // The owner key is shown this once; the device that made the song keeps it.
-    return json({ ...ownerView(job, true), ownerKey: job.ownerKey });
+    return json({ ...ownerView(job, true), ownerKey: job.ownerKey, quota: quotaView(await getQuota(env)) });
   }
   const ownerKey = request.headers.get('X-Owner-Key') || '';
   const dl = url.searchParams.get('dl') === '1';
@@ -326,6 +328,8 @@ function mockLyrics(name, story, style, voice, ownLyrics) {
 async function createJob(env, body, request) {
   const lyrics = clean(body.lyrics, 3000);
   if (!lyrics) throw httpError(400, '还没有歌词');
+  // The monthly allowance never blocks: songs handed in after it runs out simply wait for the next period.
+  const quota = await getQuota(env);
   // Per person first (so the message is about them), then the whole site.
   await countPerPerson(env, request);
   await countUsage(env, 'jobs', Number(env.DAILY_SONG_LIMIT || 20));
@@ -361,6 +365,7 @@ async function createJob(env, body, request) {
   }
   await saveJob(env, job);
   if (job.public) await env.BUCKET.put(`public/${id}`, '1');
+  await saveQuota(env, { ...quota, left: quota.left - 1 });
   await touchPulse(env);
   await pruneOldSongs(env);
   return job;
@@ -555,6 +560,11 @@ async function removeAudio(env, id) {
 
 async function deleteJob(env, id) {
   const job = await getJob(env, id);
+  // A song removed before it was made gives its place back.
+  if (job.status === 'queued') {
+    const q = await getQuota(env);
+    await saveQuota(env, { ...q, left: q.left + 1 });
+  }
   await env.BUCKET.delete(`audio/${job.id}`);
   await env.BUCKET.delete(`drawings/${job.id}`);
   await env.BUCKET.delete(`covers/${job.id}`);
@@ -624,6 +634,51 @@ async function countUsage(env, kind, limit) {
   const n = obj ? Number(await obj.text()) : 0;
   if (n >= limit) throw httpError(429, '今天的次数用完啦，明天再来', true);
   await env.BUCKET.put(key, String(n + 1));
+}
+
+// ---------- monthly allowance ----------
+// One shared number: how many more songs can be made before the next reset day (the 20th by default).
+// Handing in a song spends one. It may go below zero: those songs are owed, and are taken out of the
+// next period's allowance when it refills. People only ever see zero. The admin can edit all three numbers.
+
+function cycleInfo(resetDay) {
+  const now = new Date(Date.now() + 8 * 3600e3); // Beijing date, same as the daily limits
+  let y = now.getUTCFullYear(), m = now.getUTCMonth();
+  if (now.getUTCDate() < resetDay) { m--; if (m < 0) { m = 11; y--; } }
+  const nextMonth = (m + 1) % 12;
+  return { cycle: `${y}-${String(m + 1).padStart(2, '0')}-${resetDay}`, next: `${nextMonth + 1}月${resetDay}号` };
+}
+
+async function getQuota(env) {
+  const obj = await env.BUCKET.get('meta/quota');
+  const base = Number(env.MONTHLY_SONGS || 20);
+  const q = obj ? await obj.json() : { left: base, refill: base, resetDay: Number(env.QUOTA_RESET_DAY || 20) };
+  const info = cycleInfo(q.resetDay);
+  if (q.cycle !== info.cycle) {
+    if (q.cycle) q.left = q.refill + Math.min(0, q.left); // new period: refill, minus songs already waiting
+    q.cycle = info.cycle;
+    await saveQuota(env, q);
+  }
+  return { ...q, next: info.next };
+}
+
+function saveQuota(env, q) {
+  const { left, refill, resetDay, cycle } = q;
+  return env.BUCKET.put('meta/quota', JSON.stringify({ left, refill, resetDay, cycle }));
+}
+
+function quotaView(q) {
+  return { left: Math.max(0, q.left), owed: Math.max(0, -q.left), refill: q.refill, resetDay: q.resetDay, next: q.next };
+}
+
+async function editQuota(env, body) {
+  const q = await getQuota(env);
+  const int = (v, lo, hi, d) => (Number.isInteger(v) && v >= lo && v <= hi ? v : d);
+  const resetDay = int(body.resetDay, 1, 28, q.resetDay);
+  const next = { ...q, left: int(body.left, 0, 9999, q.left), refill: int(body.refill, 0, 9999, q.refill), resetDay };
+  next.cycle = cycleInfo(resetDay).cycle; // changing the day must not trigger a refill by itself
+  await saveQuota(env, next);
+  return getQuota(env);
 }
 
 // "Per person" without logins: each device sends a random id it keeps in its browser.

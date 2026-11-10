@@ -6,7 +6,7 @@
   <title>怪狗唱片 · 待做清单</title>
   <meta name="robots" content="noindex">
   <link rel="icon" href="assets/dogs/schnauzer.webp">
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
   <style>
     body { font-size: 17px; }
     .wrap { width: min(1180px, 100%); }
@@ -32,6 +32,10 @@
     .job audio { width: 100%; margin: 6px 0; }
     .progress { height: 8px; border-radius: 4px; background: var(--hair); overflow: hidden; }
     .progress i { display: block; height: 100%; width: 0; background: var(--green); transition: width .1s; }
+    .quota-edit { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 16px; margin: 0 0 16px; font-weight: 700; }
+    .quota-edit input { width: 76px; padding: 6px 8px; font-size: 18px; text-align: center; border-radius: 10px; }
+    .quota-edit .sep { margin-left: 14px; }
+    .quota-edit .note { flex-basis: 100%; font-weight: 400; font-size: 14px; color: var(--ink-soft); }
     details summary { cursor: pointer; color: var(--ink-soft); font-size: 15px; }
     @media (max-width: 700px) { .job { grid-template-columns: 1fr; } .job .cover { max-width: 200px; } }
   </style>
@@ -43,7 +47,7 @@
   </header>
   <main class="wrap" id="view"></main>
   <div class="toast" id="toast" role="status"></div>
-  <script src="config.js?v=8"></script>
-  <script src="admin.js?v=8"></script>
+  <script src="config.js?v=9"></script>
+  <script src="admin.js?v=9"></script>
 </body>
 </html>

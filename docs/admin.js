@@ -35,7 +35,9 @@
     if (!token) return login();
     $('#logout').hidden = false;
     let max = 100;
+    let quota = null;
     try { const d = await api('/api/admin/jobs'); jobs = d.jobs; max = d.max || max; } catch (e) { if (token) toast(e.message); return; }
+    try { quota = await api('/api/quota'); } catch {}
     const q = jobs.filter((j) => j.status === 'queued');
     const shown = tab === 'all' ? jobs : jobs.filter((j) => j.status === tab);
     view.innerHTML = `
@@ -44,6 +46,12 @@
         <button class="btn mini" id="refresh">刷新</button>
         <span class="on-felt" style="margin-left:auto;font-size:15px">共 ${jobs.length} / ${max} 首，满了会自动删掉最早做好的</span>
       </div>
+      ${quota ? `<form class="quota-edit paper" id="quota-form">
+        <span>这个月还能做</span><input type="number" id="q-left" min="0" max="9999" value="${quota.left}"><span>首</span>
+        <span class="sep">每月</span><input type="number" id="q-day" min="1" max="28" value="${quota.resetDay}"><span>号恢复成</span><input type="number" id="q-refill" min="0" max="9999" value="${quota.refill}"><span>首</span>
+        <button class="btn primary mini">保存</button>
+        <span class="note">${quota.owed ? `已有 ${quota.owed} 首排在额度外，${esc(quota.next)}恢复时会扣掉。` : `大家在右上角看到的就是这个数，每交一首减 1，${esc(quota.next)}恢复。`}</span>
+      </form>` : ''}
       <label class="drop" id="drop">
         <b>批量上传：</b>把 mp3 一起拖到这里，文件名以编号开头就行（比如 <code>12.mp3</code>、<code>12号 院子里的光.mp3</code>）。
         <input type="file" id="bulk" accept="audio/*" multiple hidden>
@@ -86,6 +94,16 @@
   function bind() {
     view.querySelectorAll('[data-tab]').forEach((b) => b.addEventListener('click', () => { tab = b.dataset.tab; set('tab', tab); render(); }));
     $('#refresh').addEventListener('click', render);
+    const qf = $('#quota-form');
+    if (qf) qf.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const num = (id) => parseInt($(id).value, 10);
+      try {
+        await api('/api/admin/quota', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ left: num('#q-left'), resetDay: num('#q-day'), refill: num('#q-refill') }) });
+        toast('额度已保存');
+        render();
+      } catch (err) { toast(err.message); }
+    });
     const drop = $('#drop');
     $('#bulk').addEventListener('change', (e) => bulk([...e.target.files]));
     dnd(drop, (files) => bulk(files));

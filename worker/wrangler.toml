@@ -23,6 +23,10 @@ DAILY_SONG_LIMIT = "20"
 # Songs one person may hand in per day (per device), and the backstop per network address.
 DAILY_SONGS_PER_PERSON = "2"
 DAILY_SONGS_PER_NETWORK = "6"
+# Monthly allowance: starting number and the day of the month it resets. After the first run these live in
+# storage and are edited from the admin page; the values here are only the initial ones.
+MONTHLY_SONGS = "20"
+QUOTA_RESET_DAY = "20"
 # Most songs kept at once; beyond this the oldest finished songs are deleted automatically.
 MAX_SONGS = "100"
 DEEPSEEK_MODEL = "deepseek-chat"

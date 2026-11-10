@@ -116,6 +116,42 @@
     store.set('mysongs', s.slice(0, 60));
   }
 
+  // ---------- monthly allowance (shown top right on every page) ----------
+  let quota = store.get('quota', null); // last known value, so the pill doesn't flicker on load
+  function showQuota() {
+    const el = $('#quota');
+    if (!quota) { el.hidden = true; return; }
+    el.hidden = false;
+    el.classList.toggle('empty', quota.left <= 0);
+    el.classList.toggle('low', quota.left > 0 && quota.left <= 3);
+    el.innerHTML = quota.left > 0
+      ? `${ICON.music}<span class="lbl">本月还剩</span><b>${quota.left}</b><span>首</span>`
+      : `${ICON.music}<span>${esc(quota.next).replace(/^(\d+月)/, '<span class="lbl">$1</span>')}后再做</span>`;
+    el.title = quota.left > 0 ? `这个月还能做 ${quota.left} 首歌，${quota.next}恢复` : `这个月的歌做完了，${quota.next}之后才会接着做`;
+  }
+  function setQuota(q) {
+    if (!q || typeof q.left !== 'number') return;
+    const was = quota && quota.left;
+    quota = q;
+    store.set('quota', q);
+    showQuota();
+    // The "used up" notice lives on the home page: redraw it if that just changed.
+    if ((was > 0) !== (q.left > 0) && $('#quota-note')) renderQuotaNote();
+  }
+  async function loadQuota() {
+    try { setQuota(await api('/api/quota')); } catch {}
+  }
+  function renderQuotaNote() {
+    const box = $('#quota-note');
+    if (!box) return;
+    const p = store.get('profile') || {};
+    box.innerHTML = quota && quota.left <= 0 ? `
+      <div class="paper card busy">
+        <img src="${dogSrc(p.dog)}" alt="">
+        <div><b>${esc(MAKER)}这个月的歌做完了</b><br>${esc(quota.next)}之后才可以再做。现在照样可以交歌，会先排着队，到时候按顺序做。</div>
+      </div>` : '';
+  }
+
   // ---------- router ----------
   let cleanup = null;
   function go(hash) { location.hash = hash; }
@@ -128,6 +164,8 @@
       me.innerHTML = `<img src="${dogSrc(profile.dog)}" alt=""><span>${esc(profile.name)}</span>`;
     } else me.hidden = true;
 
+    showQuota();
+    loadQuota();
     const h = location.hash.replace(/^#/, '') || '/';
     if (!profile || (GATE && !store.get('key')) || h === '/me') return renderWelcome();
     window.scrollTo(0, 0);
@@ -203,6 +241,7 @@
           <button class="find-go">找歌 ${ICON.arrow}</button>
         </div>
       </form>
+      <div id="quota-note"></div>
       <div id="pending"></div>
       <div class="section-head"><h2 class="on-felt">我的歌</h2></div>
       <div class="songs" id="songs"></div>
@@ -215,6 +254,7 @@
       if (/^\d{3,6}$/.test(no.value)) go(`/song/${no.value}`);
       else toast('取歌号码是 3 位数字');
     });
+    renderQuotaNote();
     renderPending();
     loadMySongs();
     loadSquare($('#square'), 8);
@@ -228,8 +268,8 @@
       <div class="paper card busy" data-id="${x.id}">
         <img src="${dogSrc(x.body.dog)}" alt="">
         <div>
-          <b>${x.why === 'limit' ? '今天的名额用完了' : `${esc(MAKER)}正在忙！`}</b><br>
-          《${esc(x.body.title)}》的歌词和风格已经存在这台设备上了，还没交上去。${x.why === 'limit' ? '明天点「再交一次」就行。' : ''}
+          <b>${x.why === 'limit' ? '这首还交不了' : `${esc(MAKER)}正在忙！`}</b><br>
+          ${x.why === 'limit' && x.note ? `${esc(x.note.replace(/[，。]?歌词帮你存好了.*$/, ''))}。` : ''}《${esc(x.body.title)}》的歌词和风格已经存在这台设备上了，到时候点「再交一次」就行。
           <div class="row" style="margin-top:12px">
             <button class="btn primary" data-act="send">再交一次</button>
             <button class="btn" data-act="drop">不要了</button>
@@ -249,12 +289,14 @@
       b.disabled = true;
       try {
         const job = await api('/api/jobs', { method: 'POST', body: item.body });
+        setQuota(job.quota);
         pending.remove(id);
         ownerKeys.set(job.code, job.ownerKey);
         rememberSong(job.code);
         go(`/song/${job.code}?new`);
       } catch (err) {
         b.disabled = false;
+        if (err.limit) loadQuota();
         toast(err.limit ? err.message : err.busy ? `${MAKER}还在忙，过一会儿再试` : err.message);
       }
     };
@@ -375,12 +417,12 @@
   // Songs that could not be handed in (no answer from the server). Kept on this device until sent.
   const pending = {
     all: () => store.get('pending', []),
-    add(body, why) {
-      const item = { id: Date.now(), body, why };
+    add(body, why, note) {
+      const item = { id: Date.now(), body, why, note };
       store.set('pending', [item, ...pending.all()]);
       if (!pending.all().some((x) => x.id === item.id)) {
         // Probably out of space because of the drawing: keep the words at least.
-        store.set('pending', [{ id: item.id, why, body: { ...body, image: undefined } }, ...pending.all()]);
+        store.set('pending', [{ id: item.id, why, note, body: { ...body, image: undefined } }, ...pending.all()]);
       }
     },
     remove(id) { store.set('pending', pending.all().filter((x) => x.id !== id)); },
@@ -502,13 +544,17 @@
       };
       try {
         const job = await api('/api/jobs', { method: 'POST', body });
+        const hadRoom = !quota || quota.left > 0;
+        setQuota(job.quota);
         ownerKeys.set(job.code, job.ownerKey);
         rememberSong(job.code);
         clearDraft();
         go(`/song/${job.code}?new`);
+        if (!hadRoom && quota) setTimeout(() => toast(`交上来了！这个月的歌做完了，${quota.next}之后才会做`), 600);
       } catch (err) {
         if (err.busy) {
-          pending.add(body, err.limit ? 'limit' : 'busy');
+          pending.add(body, err.limit ? 'limit' : 'busy', err.limit ? err.message : '');
+          if (err.limit) loadQuota();
           clearDraft();
           go('/');
           toast(err.limit ? err.message : `${MAKER}正在忙！歌词和风格已经存好`);
@@ -742,7 +788,9 @@
               </div>
               ${shared ? '' : '<p class="hint" style="margin:12px 0 0">喜欢的歌记得存下来：这里放不下太多，最早的歌以后会被清掉。</p>'}` : `
               ${isNew ? `<p style="margin:6px 0">交上去了！记住你的取歌号码，以后输入它就能找到这首歌：</p><div class="big-no">${j.code}</div>` : ''}
-              <div class="waiting"><img src="${dogSrc(j.dog)}" alt=""><div><b>${esc(MAKER)}正在忙！</b><br>你的歌词和风格已经存好了，轮到这首就开始做，一般当天就好。做好以后，在首页「我的歌」里点它就能听。</div></div>`}
+              <div class="waiting"><img src="${dogSrc(j.dog)}" alt=""><div>${quota && quota.left <= 0
+                ? `<b>${esc(MAKER)}这个月的歌做完了</b><br>${esc(quota.next)}之后才会做这首。你的歌词和风格已经存好了，不用再交，做好以后在首页「我的歌」里点它就能听。`
+                : `<b>${esc(MAKER)}正在忙！</b><br>你的歌词和风格已经存好了，轮到这首就开始做，一般当天就好。做好以后，在首页「我的歌」里点它就能听。`}</div></div>`}
             ${!j.canEdit ? '' : `<label class="share"><input type="checkbox" id="pub" ${j.public ? 'checked' : ''}><span class="switch"></span><span>公开到「大家的歌」${done ? '' : '（做好后才会出现）'}</span></label>`}
           </div>
         </section>

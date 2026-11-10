@@ -51,7 +51,7 @@ a { color: inherit; }
 .brand small { font-size: 12px; letter-spacing: .6px; opacity: .78; font-weight: 600; }
 .brand b { font-family: var(--font-fun); font-size: 30px; font-weight: 400; letter-spacing: 2px; text-shadow: 0 3px 0 rgba(0,0,0,.25); }
 .top .me {
-  margin-left: auto; display: flex; align-items: center; gap: 8px;
+  margin-left: 0; display: flex; align-items: center; gap: 8px;
   background: rgba(255, 248, 234, .16); border: 1px solid rgba(255,255,255,.28);
   color: var(--cream-hi); border-radius: 999px; padding: 4px 16px 4px 4px; min-height: 52px;
   cursor: pointer;
@@ -399,4 +399,30 @@ textarea { min-height: 220px; resize: vertical; }
 .photo-pick { cursor: pointer; }
 @media (min-width: 761px) and (max-width: 980px) {
   .choices { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- monthly allowance pill ---------- */
+.quota {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 5px; height: 40px; padding: 0 14px 0 10px;
+  border-radius: 999px; color: var(--cream-hi); font-size: 15px; white-space: nowrap;
+  background: rgba(255, 248, 234, .16); border: 1px solid rgba(255, 255, 255, .28);
+}
+.quota, .top .me, .brand { flex: none; }
+.quota svg { width: 18px; height: 18px; opacity: .85; }
+.quota b { font-family: var(--font-fun); font-weight: 400; font-size: 22px; line-height: 1; margin: 0 1px; }
+.quota.low { background: rgba(240, 162, 58, .9); border-color: transparent; color: var(--ink); }
+.quota.empty { background: var(--cream-hi); border-color: transparent; color: var(--ink); font-weight: 700; }
+.quota[hidden] + .me { margin-left: auto; }
+@media (max-width: 760px) {
+  .top { gap: 8px; padding: 10px 12px; }
+  .brand img { width: 40px; height: 40px; }
+  .brand small { display: none; }
+  .quota { height: 36px; padding: 0 10px 0 8px; font-size: 14px; }
+  .quota .lbl { display: none; }
+  .quota b { font-size: 19px; }
+  .top .me { min-height: 44px; padding: 3px 10px 3px 3px; }
+  .top .me img { width: 36px; height: 36px; }
+  .top .me { padding: 3px; }
+  .top .me span { display: none; }
+  .brand b { font-size: 22px; white-space: nowrap; }
 }
