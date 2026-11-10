@@ -51,6 +51,17 @@ https://yourname.github.io/guaigou-songs/?k=家里暗号&name=姥姥
 
 在 iPad 的 Safari 里点「分享 → 添加到主屏幕」，之后就像一个 App。
 
+## 两个网址
+
+- https://guaigou-songs.pages.dev/ ：Cloudflare Pages 上的一份，网页和 `/api/` 都走这一个地址。国内网络连不上 `*.workers.dev`，所以国内的人要用这个。
+- https://ruiling-smartbear.github.io/guaigou-songs/ ：GitHub Pages 上的一份，后端走 `workers.dev`。
+
+两个网址用的是同一个后端、同一份数据。改了 `docs/` 之后，GitHub 那份 push 就更新；Pages 那份要再发布一次：
+
+```bash
+node tools/build-pages.mjs && cd pages && npx wrangler pages deploy --branch main
+```
+
 ## 取歌号码和公开
 
 - 每首歌提交后会拿到一个随机的 3 位取歌号码，比如 `795`。在首页输入号码就能打开这首歌。号码是随机发的，不会按 1、2、3 顺着被翻到。3 位只有 900 个，有人存心一个个试还是能试出来，家里用够了；介意的话把 `worker/src/index.js` 里 `newCode` 的起始位数改成 4。
