@@ -444,3 +444,5 @@ textarea { min-height: 220px; resize: vertical; }
 }
 .netwarn b { display: block; }
 .netwarn .btn { display: flex; margin-top: 10px; min-height: 52px; font-size: 18px; box-shadow: none; }
+
+.section-sub { margin: -2px 0 0; font-size: 16px; opacity: .85; }

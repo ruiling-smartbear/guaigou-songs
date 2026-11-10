@@ -277,6 +277,7 @@
       <div class="section-head"><h2 class="on-felt">我的歌</h2></div>
       <div class="songs" id="songs"></div>
       <div class="section-head"><h2 class="on-felt">大家的歌</h2><a class="btn mini-light" href="#/square">看全部</a></div>
+      <p class="on-felt section-sub">听听大家的歌</p>
       <div class="songs" id="square"></div>`;
     const no = $('#no');
     no.addEventListener('input', () => { no.value = no.value.replace(/\D/g, ''); });
@@ -350,7 +351,7 @@
     view.innerHTML = `
       <a class="back" href="#/">${ICON.left}首页</a>
       <h1 class="on-felt">大家的歌</h1>
-      <p class="on-felt" style="margin-top:0">这些是大家愿意公开的歌。</p>
+      <p class="on-felt" style="margin-top:0">听听大家的歌</p>
       <div class="songs" id="square"></div>`;
     loadSquare($('#square'));
   }
