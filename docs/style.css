@@ -358,7 +358,7 @@ textarea { min-height: 220px; resize: vertical; }
   content: ''; position: absolute; left: 3px; top: 3px; width: 28px; height: 28px; border-radius: 50%;
   background: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, .25); transition: transform .15s;
 }
-.share input:checked + .switch { background: var(--green); }
+.share input:checked + .switch { background: var(--felt); }
 .share input:checked + .switch::after { transform: translateX(24px); }
 .share input:focus-visible + .switch { outline: 3px solid var(--sky); outline-offset: 2px; }
 .cover-btn {
