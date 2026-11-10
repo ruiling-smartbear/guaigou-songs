@@ -6,3 +6,4 @@ node_modules/
 tools/.handed.json
 secrets.local.txt
 *.zip
+harness-kit/suno-maker.mjs
