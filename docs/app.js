@@ -160,6 +160,25 @@
       </div>` : '';
   }
 
+  // ---------- can this network reach the song server at all? ----------
+  // Some networks (mainland China in particular) cannot reach the backend address, and requests just hang.
+  // Find out within a few seconds and say so, instead of letting people wait on a spinner.
+  let serverOk = null;
+  async function checkServer() {
+    const el = $('#netwarn');
+    try {
+      await api('/api/ping', { timeout: 8000 });
+      if (serverOk === false) { toast('连上了，可以继续'); loadQuota(); }
+      serverOk = true;
+      el.hidden = true;
+    } catch {
+      serverOk = false;
+      el.hidden = false;
+      el.innerHTML = '<b>现在连不上做歌的服务器</b><span>这个网络可能访问不了它（在国内比较常见）。可以换个网络，比如从流量换成 Wi-Fi，或者过一会儿再试。你写的内容不会丢。</span>';
+      setTimeout(checkServer, 20000);
+    }
+  }
+
   // ---------- router ----------
   let cleanup = null;
   function go(hash) { location.hash = hash; }
@@ -893,4 +912,5 @@
   })();
 
   render();
+  checkServer();
 })();

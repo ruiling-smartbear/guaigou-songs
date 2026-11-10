@@ -430,3 +430,10 @@ textarea { min-height: 220px; resize: vertical; }
 /* File inputs stay in the layout (1px, invisible): display:none stops the picker opening in some in-app browsers. */
 .file-hide { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; }
 .photo-pick, .cover-btn { position: relative; }
+
+/* ---------- "cannot reach the server" notice ---------- */
+.netwarn {
+  width: min(1040px, calc(100% - 32px)); margin: 10px auto 0; padding: 12px 16px; border-radius: 16px;
+  background: var(--tan); color: var(--ink); font-size: 17px; line-height: 1.5; box-shadow: 0 4px 0 rgba(0, 0, 0, .18);
+}
+.netwarn b { display: block; }
