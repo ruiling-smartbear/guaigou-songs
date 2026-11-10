@@ -59,6 +59,7 @@ for (const j of waiting) {
     `歌名：${j.title}`,
     `谁的歌：${j.name}（${({ drawing: '画的', lyrics: '自己写的词', photo: '传的照片' })[j.kind] || '讲的故事'}）`,
     `提交时间：${when(j.createdAt)}`,
+    ...(j.city ? [`城市：${j.city}`] : []),
     `取歌号码：${j.code}`,
     `做好后的文件名：${base}.mp3`,
     '',

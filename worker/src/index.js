@@ -101,12 +101,17 @@ async function route(request, env) {
     if (mm && m === 'DELETE') return json(squareView(await removeAudio(env, mm[1])));
     mm = p.match(/^\/api\/admin\/jobs\/(\d+)$/);
     if (mm && m === 'DELETE') return json(await deleteJob(env, mm[1]));
+    if (mm && m === 'PATCH') return json(squareView(await editJob(env, mm[1], await readJson(request))));
     throw httpError(404, '没有这个接口');
   }
 
   requireFamily(request, env, url);
   if (p === '/api/quota' && m === 'GET') return json(quotaView(await getQuota(env)));
-  if (p === '/api/lyrics' && m === 'POST') return json(await writeLyrics(env, await readJson(request)));
+  if (p === '/api/lyrics' && m === 'POST') {
+    const body = await readJson(request);
+    body.style = resolveStyle(body.style); // "surprise" becomes a real style here, so the page can remember which one
+    return json({ ...(await writeLyrics(env, body)), style: body.style });
+  }
   if (p === '/api/jobs' && m === 'POST') {
     const job = await createJob(env, await readJson(request), request);
     // The owner key is shown this once; the device that made the song keeps it.
@@ -355,6 +360,8 @@ async function createJob(env, body, request) {
     title: clean(body.title, 30) || '无题',
     lyrics,
     tags: clean(body.tags, 200),
+    style: STYLES[body.style] ? body.style : inferStyle(clean(body.tags, 200)),
+    city: cleanCity(body.city),
     status: 'queued',
     hasDrawing: false,
     hasAudio: false,
@@ -505,7 +512,39 @@ function squareView(job) {
     id: job.id, name: job.name, dog: job.dog, kind: job.kind, title: job.title,
     lyrics: job.lyrics, status: job.status, hasDrawing: job.hasDrawing, hasCover: !!job.hasCover,
     hasAudio: job.hasAudio, createdAt: job.createdAt, doneAt: job.doneAt || null,
+    style: job.style || inferStyle(job.tags), city: job.city || '',
   };
+}
+
+function resolveStyle(id) {
+  if (STYLES[id]) return id;
+  const keys = Object.keys(STYLES);
+  return id === 'surprise' ? keys[Math.floor(Math.random() * keys.length)] : 'tender';
+}
+
+// Songs made before styles were recorded only have the English tags: match them back to a style.
+function inferStyle(tags) {
+  const t = String(tags || '').toLowerCase();
+  let best = '';
+  let bestLen = 0;
+  for (const [id, text] of Object.entries(STYLES)) {
+    const lead = text.split(',')[0].trim().toLowerCase();
+    if (lead.length > bestLen && t.includes(lead)) { best = id; bestLen = lead.length; }
+  }
+  return best;
+}
+
+// A short place name, shown on the song card. Letters, digits, spaces and a few separators only.
+function cleanCity(v) {
+  return clean(v, 12).replace(/[^\p{L}\p{N} ·.\-]/gu, '').trim();
+}
+
+async function editJob(env, id, body) {
+  const job = await getJob(env, id);
+  if (typeof body.city === 'string') job.city = cleanCity(body.city);
+  if (typeof body.style === 'string' && (STYLES[body.style] || body.style === '')) job.style = body.style;
+  await saveJob(env, job);
+  return job;
 }
 
 function ownerView(job, canEdit = false) {
@@ -722,7 +761,7 @@ function corsHeaders(request, env) {
   const allow = allowed.includes('*') ? '*' : allowed.includes(origin) ? origin : allowed[0];
   return {
     'Access-Control-Allow-Origin': allow,
-    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+    'Access-Control-Allow-Methods': 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type,X-Family-Key,X-Owner-Key,X-Device-Id,Authorization',
     'Access-Control-Expose-Headers': 'Content-Disposition',
     Vary: 'Origin',

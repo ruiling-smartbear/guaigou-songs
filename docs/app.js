@@ -386,9 +386,14 @@
       ? '<span class="chip-status done">可以听了</span>'
       : '<span class="chip-status queued">还在做</span>';
   }
+  const styleLabel = (id) => (SG.styles.find((x) => x.id === id) || {}).label || '';
+  // "R&B · 纽约": the style, then the city if the maker gave one.
+  const tagline = (j) => [styleLabel(j.style), j.city].filter(Boolean).map(esc).join(' · ');
   function songCardInner(j, mine) {
+    const tl = tagline(j);
     return `<div class="cover">${coverHtml(j)}${mine ? `<span class="badge">${statusChip(j)}</span>` : ''}</div>
-      <div class="t">${esc(j.title)}</div><div class="n">${mine ? `号码 ${j.code}${j.public ? ' · 已公开' : ''}` : esc(j.name)}</div>`;
+      <div class="t">${esc(j.title)}</div>
+      <div class="n"><span>${mine ? `号码 ${j.code}${j.public ? ' · 已公开' : ''}` : esc(j.name)}</span>${tl ? `<span class="tagline">${tl}</span>` : ''}</div>`;
   }
 
   function chipsHtml(name, opts, current, front = opts.length) {
@@ -417,6 +422,7 @@
       <div class="style-tabs" role="tablist">${SG.cats.map(([id, l]) => `<button type="button" role="tab" data-cat="${id}" aria-selected="${id === cat}">${l}</button>`).join('')}</div>
       <div class="style-grid" id="style-grid">${styleChips(cat, state.style)}</div>
       <div class="voice-row"><span>谁来唱</span>${chipsHtml('voice', VOICES, state.voice)}</div>
+      <label class="city-row"><span>你的城市</span><input type="text" id="city" maxlength="12" placeholder="可以不填" value="${esc(store.get('pref.city', ''))}" autocomplete="off"></label>
     </section>`;
   }
   function styleChips(cat, current) {
@@ -425,6 +431,8 @@
       : '')).join('');
   }
   function bindStyles(root, state) {
+    const city = root.querySelector('#city');
+    if (city) city.addEventListener('input', () => store.set('pref.city', city.value.trim()));
     const grid = root.querySelector('#style-grid');
     root.querySelector('.style-tabs').addEventListener('click', (e) => {
       const t = e.target.closest('[data-cat]');
@@ -565,7 +573,7 @@
       const b = e.currentTarget;
       b.disabled = true;
       const p = store.get('profile');
-      const body = { name: p.name, dog: p.dog, kind: req.kind, story: req.story || '', image: req.image, title: $('#song-title').value.trim() || r.title, lyrics: r.lyrics, tags: r.tags, public: $('#pub').checked };
+      const body = { name: p.name, dog: p.dog, kind: req.kind, story: req.story || '', image: req.image, title: $('#song-title').value.trim() || r.title, lyrics: r.lyrics, tags: r.tags, style: r.style, city: store.get('pref.city', ''), public: $('#pub').checked };
       const clearDraft = () => {
         if (req.kind === 'story') draft.story = '';
         else if (req.kind === 'lyrics') { draft.lyrics = ''; draft.title = ''; }
@@ -813,7 +821,7 @@
           <div>
             ${shared ? '' : `<div class="song-no">取歌号码 <b>${j.code}</b></div>`}
             <h1>《${esc(j.title)}》</h1>
-            <p class="hint">${who}</p>
+            <p class="hint">${who}${tagline(j) ? `<span class="tagline">${tagline(j)}</span>` : ''}</p>
             ${done ? `
               <div class="row">
                 <button class="btn primary big" id="play">${ICON.play} 播放</button>

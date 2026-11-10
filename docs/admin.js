@@ -71,7 +71,7 @@
           <h3>${j.id} ·《${esc(j.title)}》</h3>
           <span class="chip-status ${j.status}">${j.status === 'done' ? '已完成' : '待做'}</span>
         </div>
-        <div class="meta-line">取歌号码 <b>${esc(j.code || '—')}</b> · ${j.public ? '已公开' : '不公开'} · ${esc(j.name)} · ${({ drawing: '画', lyrics: '自己写的词', photo: '照片' })[j.kind] || '故事'} · ${when}</div>
+        <div class="meta-line">取歌号码 <b>${esc(j.code || '—')}</b> · ${j.public ? '已公开' : '不公开'} · ${esc(j.name)} · ${j.city ? esc(j.city) : '没填城市'} · ${({ drawing: '画', lyrics: '自己写的词', photo: '照片' })[j.kind] || '故事'} · ${when}</div>
         ${field('歌名 Title', j.title, 'title')}
         ${field('风格 Style of Music', j.tags, 'tags')}
         ${field('歌词 Lyrics', j.lyrics, 'lyrics')}
@@ -81,6 +81,7 @@
           <button class="btn primary mini" data-act="upload">${j.hasAudio ? '重新上传' : '上传 mp3'}</button>
           ${j.hasAudio ? '<button class="btn mini" data-act="unset">撤回音频</button>' : ''}
           <button class="btn mini" data-act="link">复制取歌链接</button>
+          <button class="btn mini" data-act="city">${j.city ? '改城市' : '补城市'}</button>
           <button class="btn mini" data-act="delete" style="margin-left:auto">删除</button>
         </div>
         <div class="progress" hidden><i></i></div>
@@ -125,6 +126,12 @@
           if (confirm(`撤回 ${id} 号的音频？`)) { await api(`/api/admin/jobs/${id}/audio`, { method: 'DELETE' }); render(); }
         } else if (b.dataset.act === 'delete') {
           if (confirm(`彻底删除 ${id} 号（歌词、画、音频）？删了找不回来。`)) { await api(`/api/admin/jobs/${id}`, { method: 'DELETE' }); render(); }
+        } else if (b.dataset.act === 'city') {
+          const city = prompt(`《${j.title}》的城市（留空就是不显示）`, j.city || '');
+          if (city !== null) {
+            await api(`/api/admin/jobs/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ city }) });
+            render();
+          }
         } else if (b.dataset.act === 'link') {
           const url = new URL('./', location.href).href + `#/song/${j.code}`;
           try { await navigator.clipboard.writeText(url); toast('取歌链接已复制'); } catch { prompt('复制这个链接', url); }
