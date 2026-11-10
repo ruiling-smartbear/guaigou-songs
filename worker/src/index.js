@@ -106,7 +106,7 @@ async function route(request, env) {
   requireFamily(request, env, url);
   if (p === '/api/lyrics' && m === 'POST') return json(await writeLyrics(env, await readJson(request)));
   if (p === '/api/jobs' && m === 'POST') {
-    const job = await createJob(env, await readJson(request));
+    const job = await createJob(env, await readJson(request), request);
     // The owner key is shown this once; the device that made the song keeps it.
     return json({ ...ownerView(job, true), ownerKey: job.ownerKey });
   }
@@ -323,9 +323,11 @@ function mockLyrics(name, story, style, voice, ownLyrics) {
 
 // ---------- jobs ----------
 
-async function createJob(env, body) {
+async function createJob(env, body, request) {
   const lyrics = clean(body.lyrics, 3000);
   if (!lyrics) throw httpError(400, '还没有歌词');
+  // Per person first (so the message is about them), then the whole site.
+  await countPerPerson(env, request);
   await countUsage(env, 'jobs', Number(env.DAILY_SONG_LIMIT || 20));
 
   const id = await nextId(env);
@@ -598,7 +600,8 @@ async function serveFile(env, job, what, download, request) {
 // ---------- guards ----------
 
 function requireFamily(request, env, url) {
-  if (!env.FAMILY_KEY) return;
+  // The passphrase gate is off unless REQUIRE_FAMILY_KEY is "1" (and a FAMILY_KEY secret exists).
+  if (env.REQUIRE_FAMILY_KEY !== '1' || !env.FAMILY_KEY) return;
   // Headers can only carry ASCII, so the site percent-encodes the passphrase (it may be Chinese).
   let k = request.headers.get('X-Family-Key') || '';
   try { k = decodeURIComponent(k); } catch {}
@@ -623,6 +626,32 @@ async function countUsage(env, kind, limit) {
   await env.BUCKET.put(key, String(n + 1));
 }
 
+// "Per person" without logins: each device sends a random id it keeps in its browser.
+// Clearing the browser gives a new id, so the network address is capped as a backstop.
+async function countPerPerson(env, request) {
+  const day = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+  const perDevice = Number(env.DAILY_SONGS_PER_PERSON || 2);
+  const perNetwork = Number(env.DAILY_SONGS_PER_NETWORK || 6);
+  const device = (request.headers.get('X-Device-Id') || '').toLowerCase();
+  const ip = request.headers.get('CF-Connecting-IP') || '';
+  const keys = [];
+  if (/^[a-z0-9]{16,40}$/.test(device)) keys.push([`meta/usage/${day}/device/${device}`, perDevice]);
+  if (ip) keys.push([`meta/usage/${day}/net/${await sha(ip)}`, /^[a-z0-9]{16,40}$/.test(device) ? perNetwork : perDevice]);
+  const counts = [];
+  for (const [key, limit] of keys) {
+    const obj = await env.BUCKET.get(key);
+    const n = obj ? Number(await obj.text()) : 0;
+    if (n >= limit) throw httpError(429, `今天已经交了 ${perDevice} 首啦，歌词帮你存好了，明天再交`, true);
+    counts.push([key, n]);
+  }
+  for (const [key, n] of counts) await env.BUCKET.put(key, String(n + 1));
+}
+
+async function sha(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
 // ---------- utils ----------
 
 function corsHeaders(request, env) {
@@ -632,7 +661,7 @@ function corsHeaders(request, env) {
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type,X-Family-Key,X-Owner-Key,Authorization',
+    'Access-Control-Allow-Headers': 'Content-Type,X-Family-Key,X-Owner-Key,X-Device-Id,Authorization',
     'Access-Control-Expose-Headers': 'Content-Disposition',
     Vary: 'Origin',
   };

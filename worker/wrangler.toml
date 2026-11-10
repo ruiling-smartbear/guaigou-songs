@@ -16,8 +16,13 @@ id = "c173794fea884888b55bb0305bd5d172"
 [vars]
 # Your GitHub Pages address, e.g. "https://yourname.github.io"
 ALLOWED_ORIGINS = "https://ruiling-smartbear.github.io"
+# "1" = visitors must give the FAMILY_KEY passphrase (also set gate: true in docs/config.js). "0" = open to anyone with the link.
+REQUIRE_FAMILY_KEY = "0"
 DAILY_LYRICS_LIMIT = "60"
 DAILY_SONG_LIMIT = "20"
+# Songs one person may hand in per day (per device), and the backstop per network address.
+DAILY_SONGS_PER_PERSON = "2"
+DAILY_SONGS_PER_NETWORK = "6"
 # Most songs kept at once; beyond this the oldest finished songs are deleted automatically.
 MAX_SONGS = "100"
 DEEPSEEK_MODEL = "deepseek-chat"

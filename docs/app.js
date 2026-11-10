@@ -2,6 +2,7 @@
   'use strict';
 
   const API = ((window.GG_CONFIG || {}).apiBase || '').replace(/\/$/, '');
+  const GATE = !!(window.GG_CONFIG || {}).gate; // true = ask visitors for a passphrase (the server must require it too)
   const MAKER = (window.GG_CONFIG || {}).maker || '小高'; // who makes the songs, shown in "…正在忙" messages
 
   const DOGS = [
@@ -48,6 +49,16 @@
     if (k || n) { u.searchParams.delete('k'); u.searchParams.delete('name'); history.replaceState(null, '', u.pathname + u.search + u.hash); }
   })();
 
+  // A random id for this browser, used only to count "two songs a day per person".
+  const deviceId = (() => {
+    let id = store.get('device', '');
+    if (!/^[a-z0-9]{16,40}$/.test(id)) {
+      id = [...crypto.getRandomValues(new Uint8Array(12))].map((b) => b.toString(16).padStart(2, '0')).join('');
+      store.set('device', id);
+    }
+    return id;
+  })();
+
   const $ = (s, el = document) => el.querySelector(s);
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const dogSrc = (id) => `assets/dogs/${DOGS.some((d) => d[0] === id) ? id : 'pug'}.webp`;
@@ -71,7 +82,7 @@
     try {
       res = await fetch(API + path, {
         ...opts,
-        headers: { 'Content-Type': 'application/json', 'X-Family-Key': encodeURIComponent(store.get('key', '')), ...(opts.headers || {}) },
+        headers: { 'Content-Type': 'application/json', 'X-Family-Key': encodeURIComponent(store.get('key', '')), 'X-Device-Id': deviceId, ...(opts.headers || {}) },
         body: opts.body ? JSON.stringify(opts.body) : undefined,
       });
     } catch {
@@ -87,7 +98,7 @@
       }
       // No answer, server trouble or today's limit reached: worth keeping the work and retrying later.
       const busy = res.status >= 500 || res.status === 429;
-      throw Object.assign(new Error(data.error || '网络不太好，请再试一次'), { busy });
+      throw Object.assign(new Error(data.error || '网络不太好，请再试一次'), { busy, limit: res.status === 429 });
     }
     return data;
   }
@@ -118,7 +129,7 @@
     } else me.hidden = true;
 
     const h = location.hash.replace(/^#/, '') || '/';
-    if (!profile || !store.get('key') || h === '/me') return renderWelcome();
+    if (!profile || (GATE && !store.get('key')) || h === '/me') return renderWelcome();
     window.scrollTo(0, 0);
     let m;
     if (h === '/story') return renderStory();
@@ -136,7 +147,7 @@
   // ---------- welcome ----------
   function renderWelcome() {
     const profile = store.get('profile') || { name: store.get('pendingName', ''), dog: '' };
-    const needKey = !store.get('key');
+    const needKey = GATE && !store.get('key');
     view.innerHTML = `
       <div class="parade">${['shiba', 'pug', 'corgi', 'chow', 'bichon'].map((d) => `<img src="${dogSrc(d)}" alt="">`).join('')}</div>
       <section class="paper card">
@@ -217,8 +228,8 @@
       <div class="paper card busy" data-id="${x.id}">
         <img src="${dogSrc(x.body.dog)}" alt="">
         <div>
-          <b>${esc(MAKER)}正在忙！</b><br>
-          《${esc(x.body.title)}》的歌词和风格已经存在这台设备上了，还没交上去。
+          <b>${x.why === 'limit' ? '今天的名额用完了' : `${esc(MAKER)}正在忙！`}</b><br>
+          《${esc(x.body.title)}》的歌词和风格已经存在这台设备上了，还没交上去。${x.why === 'limit' ? '明天点「再交一次」就行。' : ''}
           <div class="row" style="margin-top:12px">
             <button class="btn primary" data-act="send">再交一次</button>
             <button class="btn" data-act="drop">不要了</button>
@@ -244,7 +255,7 @@
         go(`/song/${job.code}?new`);
       } catch (err) {
         b.disabled = false;
-        toast(err.busy ? `${MAKER}还在忙，过一会儿再试` : err.message);
+        toast(err.limit ? err.message : err.busy ? `${MAKER}还在忙，过一会儿再试` : err.message);
       }
     };
   }
@@ -364,12 +375,12 @@
   // Songs that could not be handed in (no answer from the server). Kept on this device until sent.
   const pending = {
     all: () => store.get('pending', []),
-    add(body) {
-      const item = { id: Date.now(), body };
+    add(body, why) {
+      const item = { id: Date.now(), body, why };
       store.set('pending', [item, ...pending.all()]);
       if (!pending.all().some((x) => x.id === item.id)) {
         // Probably out of space because of the drawing: keep the words at least.
-        store.set('pending', [{ id: item.id, body: { ...body, image: undefined } }, ...pending.all()]);
+        store.set('pending', [{ id: item.id, why, body: { ...body, image: undefined } }, ...pending.all()]);
       }
     },
     remove(id) { store.set('pending', pending.all().filter((x) => x.id !== id)); },
@@ -443,7 +454,7 @@
     } catch (e) {
       saveDraft();
       out.innerHTML = e.busy
-        ? `<div class="paper card busy"><img src="${dogSrc(p.dog)}" alt=""><div><b>${esc(MAKER)}正在忙！</b><br>你写的内容已经存在这台设备上了，不会丢。过一会儿再点一次上面的按钮就行。</div></div>`
+        ? `<div class="paper card busy"><img src="${dogSrc(p.dog)}" alt=""><div><b>${e.limit ? '今天写歌词的次数用完了' : `${esc(MAKER)}正在忙！`}</b><br>你写的内容已经存在这台设备上了，不会丢。${e.limit ? '明天' : '过一会儿'}再点一次上面的按钮就行。</div></div>`
         : '';
       if (!e.busy) toast(e.message);
     } finally {
@@ -497,10 +508,10 @@
         go(`/song/${job.code}?new`);
       } catch (err) {
         if (err.busy) {
-          pending.add(body);
+          pending.add(body, err.limit ? 'limit' : 'busy');
           clearDraft();
           go('/');
-          toast(`${MAKER}正在忙！歌词和风格已经存好`);
+          toast(err.limit ? err.message : `${MAKER}正在忙！歌词和风格已经存好`);
         } else {
           b.disabled = false;
           toast(err.message);
