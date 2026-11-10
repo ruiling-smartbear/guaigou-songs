@@ -599,8 +599,10 @@ function requireFamily(request, env, url) {
   // Headers can only carry ASCII, so the site percent-encodes the passphrase (it may be Chinese).
   let k = request.headers.get('X-Family-Key') || '';
   try { k = decodeURIComponent(k); } catch {}
-  k = k || url.searchParams.get('k');
-  if (k !== env.FAMILY_KEY) throw httpError(401, '暗号不对', true);
+  k = k || url.searchParams.get('k') || '';
+  // Forgiving on purpose: tablets capitalise the first letter and add stray spaces.
+  const norm = (x) => String(x).trim().toLowerCase();
+  if (norm(k) !== norm(env.FAMILY_KEY)) throw httpError(401, '暗号不对', true);
 }
 
 function requireAdmin(request, env, url) {
