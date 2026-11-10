@@ -426,3 +426,7 @@ textarea { min-height: 220px; resize: vertical; }
   .top .me span { display: none; }
   .brand b { font-size: 22px; white-space: nowrap; }
 }
+
+/* File inputs stay in the layout (1px, invisible): display:none stops the picker opening in some in-app browsers. */
+.file-hide { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; }
+.photo-pick, .cover-btn { position: relative; }

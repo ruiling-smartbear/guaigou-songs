@@ -285,16 +285,23 @@ async function describeDrawing(env, dataUrl, isPhoto = false) {
 
 async function chat(env, { base, key, model, messages, json: wantJson }) {
   if (!key) throw httpError(500, '还没配置 API key', true);
-  const res = await fetch(base.replace(/\/$/, '') + '/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      model,
-      messages,
-      temperature: 0.9,
-      ...(wantJson ? { response_format: { type: 'json_object' } } : {}),
-    }),
-  });
+  let res;
+  try {
+    res = await fetch(base.replace(/\/$/, '') + '/chat/completions', {
+      signal: AbortSignal.timeout(45000), // never leave the visitor's page waiting on a stuck model call
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      body: JSON.stringify({
+        model,
+        messages,
+        temperature: 0.9,
+        ...(wantJson ? { response_format: { type: 'json_object' } } : {}),
+      }),
+    });
+  } catch (e) {
+    console.error('LLM unreachable', e.name);
+    throw httpError(502, '写歌的小狗累了，请稍后再试', true);
+  }
   if (!res.ok) {
     console.error('LLM error', res.status, (await res.text()).slice(0, 300));
     throw httpError(502, '写歌的小狗累了，请稍后再试', true);

@@ -79,14 +79,22 @@
 
   async function api(path, opts = {}) {
     let res;
+    // Give up after a while instead of spinning forever on a slow or blocked connection.
+    const { timeout = 30000, ...rest } = opts;
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), timeout);
     try {
       res = await fetch(API + path, {
-        ...opts,
-        headers: { 'Content-Type': 'application/json', 'X-Family-Key': encodeURIComponent(store.get('key', '')), 'X-Device-Id': deviceId, ...(opts.headers || {}) },
-        body: opts.body ? JSON.stringify(opts.body) : undefined,
+        ...rest,
+        signal: ctl.signal,
+        headers: { 'Content-Type': 'application/json', 'X-Family-Key': encodeURIComponent(store.get('key', '')), 'X-Device-Id': deviceId, ...(rest.headers || {}) },
+        body: rest.body ? JSON.stringify(rest.body) : undefined,
       });
-    } catch {
-      throw Object.assign(new Error(`${MAKER}正在忙！过一会儿再试`), { busy: true });
+    } catch (e) {
+      const slow = e && e.name === 'AbortError';
+      throw Object.assign(new Error(slow ? '网络太慢，没连上。过一会儿再试' : `${MAKER}正在忙！过一会儿再试`), { busy: true, slow });
+    } finally {
+      clearTimeout(timer);
     }
     let data = {};
     try { data = await res.json(); } catch {}
@@ -288,7 +296,7 @@
       }
       b.disabled = true;
       try {
-        const job = await api('/api/jobs', { method: 'POST', body: item.body });
+        const job = await api('/api/jobs', { method: 'POST', body: item.body, timeout: 60000 });
         setQuota(job.quota);
         pending.remove(id);
         ownerKeys.set(job.code, job.ownerKey);
@@ -487,16 +495,16 @@
     const p = store.get('profile');
     const out = $('#result');
     btn.disabled = true;
-    const doing = req.kind === 'lyrics' ? '正在看你的歌词' : req.kind === 'photo' ? '正在看你的照片、写歌词' : '正在写歌词';
+    const doing = req.kind === 'lyrics' ? '正在看你的歌词' : req.kind === 'photo' ? '正在上传照片、写歌词' : req.kind === 'drawing' ? '正在看你的画、写歌词' : '正在写歌词';
     out.innerHTML = `<div class="paper card loading"><img src="${dogSrc(p.dog)}" alt="">${esc(dogName(p.dog))}${doing}，大约半分钟，请稍等…</div>`;
     out.scrollIntoView({ behavior: 'smooth', block: 'start' });
     try {
-      const r = await api('/api/lyrics', { method: 'POST', body: { ...req, name: p.name } });
+      const r = await api('/api/lyrics', { method: 'POST', body: { ...req, name: p.name }, timeout: req.image ? 75000 : 60000 });
       showLyrics(r, req, btn);
     } catch (e) {
       saveDraft();
       out.innerHTML = e.busy
-        ? `<div class="paper card busy"><img src="${dogSrc(p.dog)}" alt=""><div><b>${e.limit ? '今天写歌词的次数用完了' : `${esc(MAKER)}正在忙！`}</b><br>你写的内容已经存在这台设备上了，不会丢。${e.limit ? '明天' : '过一会儿'}再点一次上面的按钮就行。</div></div>`
+        ? `<div class="paper card busy"><img src="${dogSrc(p.dog)}" alt=""><div><b>${e.limit ? '今天写歌词的次数用完了' : e.slow ? '网络太慢，没连上' : `${esc(MAKER)}正在忙！`}</b><br>你写的内容已经存在这台设备上了，不会丢。${e.limit ? '明天' : '过一会儿'}再点一次上面的按钮就行。</div></div>`
         : '';
       if (!e.busy) toast(e.message);
     } finally {
@@ -543,7 +551,7 @@
         saveDraft();
       };
       try {
-        const job = await api('/api/jobs', { method: 'POST', body });
+        const job = await api('/api/jobs', { method: 'POST', body, timeout: 60000 });
         const hadRoom = !quota || quota.left > 0;
         setQuota(job.quota);
         ownerKeys.set(job.code, job.ownerKey);
@@ -577,7 +585,7 @@
         <h1>选一张照片</h1>
         <p class="hint">老照片、今天拍的、一家人的合影都可以。我们会看看照片里有什么，帮你写成一首歌，照片会当作这首歌的封面。</p>
         <div class="photo-box" id="photo-box"></div>
-        <label class="btn primary big block photo-pick">${ICON.image}<span id="pick-label">选照片</span><input type="file" accept="image/*" id="photo-file" hidden></label>
+        <label class="btn primary big block photo-pick">${ICON.image}<span id="pick-label">选照片</span><input type="file" accept="image/*" id="photo-file" class="file-hide"></label>
       </section>
       <section class="paper card">
         <h2>这张照片是什么？</h2>
@@ -597,8 +605,10 @@
     $('#photo-file').addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
-      try { photo.image = await shrinkImage(file, 1200); show(); }
+      $('#pick-label').textContent = '正在处理照片…';
+      try { photo.image = await shrinkImage(file); }
       catch (err) { toast(err.message || '这张照片用不了，换一张试试'); }
+      show();
       e.target.value = '';
     });
     const ta = $('#photo-words');
@@ -775,7 +785,7 @@
         <section class="paper song-hero">
           <div>
             <div class="cover" id="cover">${coverHtml(j)}</div>
-            ${!j.canEdit ? '' : `<label class="cover-btn">${ICON.image}<span>${j.hasCover ? '换一张封面' : '用照片当封面'}</span><input type="file" accept="image/*" id="cover-file" hidden></label>`}
+            ${!j.canEdit ? '' : `<label class="cover-btn">${ICON.image}<span>${j.hasCover ? '换一张封面' : '用照片当封面'}</span><input type="file" accept="image/*" id="cover-file" class="file-hide"></label>`}
           </div>
           <div>
             ${shared ? '' : `<div class="song-no">取歌号码 <b>${j.code}</b></div>`}
@@ -811,7 +821,7 @@
         if (!file) return;
         try {
           toast('正在上传封面…');
-          const image = await shrinkImage(file, 900);
+          const image = await shrinkImage(file, 800, 0.8);
           j = await api(`/api/songs/${j.code}/cover`, { method: 'POST', body: { image }, headers: asOwner(j.code) });
           j.coverVer = Date.now();
           $('#cover').innerHTML = coverHtml(j);
@@ -823,20 +833,31 @@
   }
 
   // Photos from a phone can be 5MB+; scale down to a square-ish JPEG before sending.
-  function shrinkImage(file, max) {
+  // 800px is plenty for the model to read and for a cover; it keeps uploads around 100 KB so slow connections cope.
+  function shrinkImage(file, max = 800, quality = 0.72) {
     return new Promise((resolve, reject) => {
       const img = new Image();
+      const url = URL.createObjectURL(file);
+      const giveUp = setTimeout(() => { URL.revokeObjectURL(url); reject(new Error('这张照片太大了，处理不了，换一张试试')); }, 20000);
       img.onload = () => {
-        const k = Math.min(1, max / Math.max(img.width, img.height));
-        const c = document.createElement('canvas');
-        c.width = Math.round(img.width * k);
-        c.height = Math.round(img.height * k);
-        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-        URL.revokeObjectURL(img.src);
-        resolve(c.toDataURL('image/jpeg', 0.85));
+        clearTimeout(giveUp);
+        try {
+          const k = Math.min(1, max / Math.max(img.width, img.height));
+          const c = document.createElement('canvas');
+          c.width = Math.max(1, Math.round(img.width * k));
+          c.height = Math.max(1, Math.round(img.height * k));
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          const out = c.toDataURL('image/jpeg', quality);
+          if (!out.startsWith('data:image/jpeg')) throw new Error('bad');
+          resolve(out);
+        } catch {
+          reject(new Error('这张照片处理不了，换一张试试'));
+        } finally {
+          URL.revokeObjectURL(url);
+        }
       };
-      img.onerror = () => reject(new Error('这张图片打不开，换一张试试'));
-      img.src = URL.createObjectURL(file);
+      img.onerror = () => { clearTimeout(giveUp); URL.revokeObjectURL(url); reject(new Error('这张图片打不开，换一张试试（截图或普通照片都可以）')); };
+      img.src = url;
     });
   }
 
