@@ -57,7 +57,7 @@ for (const j of waiting) {
   keep.add(base);
   const text = [
     `歌名：${j.title}`,
-    `谁的歌：${j.name}（${({ drawing: '画的', lyrics: '自己写的词' })[j.kind] || '讲的故事'}）`,
+    `谁的歌：${j.name}（${({ drawing: '画的', lyrics: '自己写的词', photo: '传的照片' })[j.kind] || '讲的故事'}）`,
     `提交时间：${when(j.createdAt)}`,
     `取歌号码：${j.code}`,
     `做好后的文件名：${base}.mp3`,
@@ -71,7 +71,7 @@ for (const j of waiting) {
     '',
   ].join('\n');
   await fs.writeFile(path.join(OUT, `${base}.txt`), text);
-  if (j.hasDrawing) {
+  if (j.hasDrawing) { // a drawing or an uploaded photo
     try {
       const r = await fetch(`${API}/api/admin/jobs/${j.id}/drawing`, { headers: auth });
       if (r.ok) await fs.writeFile(path.join(OUT, `${base}.jpg`), Buffer.from(await r.arrayBuffer()));

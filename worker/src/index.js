@@ -147,10 +147,11 @@ async function writeLyrics(env, body) {
   const myTitle = clean(body.title, 20);
   let picture = '';
 
-  if (body.kind === 'drawing' && body.image) {
-    picture = await describeDrawing(env, body.image);
+  const isPhoto = body.kind === 'photo';
+  if ((body.kind === 'drawing' || isPhoto) && body.image) {
+    picture = await describeDrawing(env, body.image, isPhoto);
   }
-  if (!story && !picture) throw httpError(400, ownLyrics ? '先写几句歌词吧' : '先讲一点故事，或者说说画的是什么');
+  if (!story && !picture) throw httpError(400, ownLyrics ? '先写几句歌词吧' : isPhoto ? '没看清这张照片，说一句照片里是什么吧' : '先讲一点故事，或者说说画的是什么');
 
   await countUsage(env, 'lyrics', Number(env.DAILY_LYRICS_LIMIT || 60));
 
@@ -177,7 +178,7 @@ async function writeLyrics(env, body) {
   const user = [
     `讲故事的人：${name}`,
     story ? `故事：${story}` : '',
-    picture ? `他们画的画（画面描述）：${picture}` : '',
+    picture ? `${isPhoto ? '他们上传的一张照片（画面描述）' : '他们画的画（画面描述）'}：${picture}` : '',
     `建议风格：${styleHint}`,
   ].filter(Boolean).join('\n');
 
@@ -254,7 +255,7 @@ async function finishOwnLyrics(env, name, text, styleHint, style, myTitle) {
 
 // Looks at the drawing and says what is in it. Uses DeepSeek itself (deepseek-chat / deepseek-flash can read images)
 // unless a separate VISION_* model is configured. Never blocks song writing: on any failure it returns ''.
-async function describeDrawing(env, dataUrl) {
+async function describeDrawing(env, dataUrl, isPhoto = false) {
   if (env.MOCK === '1') return '';
   const key = env.VISION_API_KEY || env.DEEPSEEK_API_KEY;
   if (!key || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image/')) return '';
@@ -267,7 +268,9 @@ async function describeDrawing(env, dataUrl) {
       messages: [{
         role: 'user',
         content: [
-          { type: 'text', text: '这是有人在平板上画的画（可能是老人，也可能是小孩）。用 2~3 句中文描述画了什么、颜色和情绪，不要评价画得好不好。如果看不到图片，只回答「看不到」。' },
+          { type: 'text', text: isPhoto
+            ? '这是用户上传的一张照片，他们想为它写一首歌。用 2~3 句中文描述照片里有什么人或物、在什么地方、是什么氛围。只描述看得到的，不要猜测人物的身份、姓名和年龄。如果看不到图片，只回答「看不到」。'
+            : '这是有人在平板上画的画（可能是老人，也可能是小孩）。用 2~3 句中文描述画了什么、颜色和情绪，不要评价画得好不好。如果看不到图片，只回答「看不到」。' },
           { type: 'image_url', image_url: { url: dataUrl } },
         ],
       }],
@@ -334,7 +337,7 @@ async function createJob(env, body) {
     public: body.public === true,
     name: clean(body.name, 20) || '朋友',
     dog: /^[a-z]{2,12}$/.test(body.dog || '') ? body.dog : 'pug',
-    kind: ['drawing', 'lyrics'].includes(body.kind) ? body.kind : 'story',
+    kind: ['drawing', 'lyrics', 'photo'].includes(body.kind) ? body.kind : 'story',
     story: clean(body.story, 3000),
     title: clean(body.title, 30) || '无题',
     lyrics,
@@ -345,7 +348,7 @@ async function createJob(env, body) {
     createdAt: new Date().toISOString(),
   };
 
-  if (job.kind === 'drawing' && typeof body.image === 'string') {
+  if ((job.kind === 'drawing' || job.kind === 'photo') && typeof body.image === 'string') {
     const m = body.image.match(/^data:image\/(png|jpeg|webp);base64,(.+)$/);
     if (m) {
       const bytes = base64ToBytes(m[2]);

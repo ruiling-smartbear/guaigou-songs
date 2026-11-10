@@ -124,6 +124,7 @@
     if (h === '/story') return renderStory();
     if (h === '/draw') return renderDraw();
     if (h === '/write') return renderWrite();
+    if (h === '/photo') return renderPhoto();
     if ((m = h.match(/^\/song\/(\d{3,6})/))) return renderSong(m[1], false);
     if ((m = h.match(/^\/square\/(\d+)/))) return renderSong(m[1], true);
     if (h === '/square') return renderSquare();
@@ -176,13 +177,14 @@
   // ---------- home ----------
   function renderHome() {
     const p = store.get('profile');
-    const peeks = ['poodle', 'corgi', 'pug', 'frenchie'].filter((d) => d !== p.dog);
+    const peeks = ['poodle', 'corgi', 'pug', 'frenchie', 'shiba'].filter((d) => d !== p.dog);
     view.innerHTML = `
       <div class="hello"><img src="${dogSrc(p.dog)}" alt=""><div><p class="on-felt" style="margin:0">你好，${esc(p.name)}！</p><h1 class="on-felt">今天想做一首什么歌？</h1></div></div>
       <div class="choices">
         <a class="choice paper" href="#/story"><div class="icon">${ICON.chat}</div><img class="peek" src="${dogSrc(peeks[0])}" alt=""><b>讲个故事</b><span>说一件事，帮你写成歌</span></a>
         <a class="choice paper" href="#/draw"><div class="icon">${ICON.brush}</div><img class="peek" src="${dogSrc(peeks[1])}" alt=""><b>画一幅画</b><span>画完了，帮你给画写首歌</span></a>
         <a class="choice paper" href="#/write"><div class="icon">${ICON.pen}</div><img class="peek" src="${dogSrc(peeks[2])}" alt=""><b>自己写词</b><span>写好的直接唱，没写完的帮你补完</span></a>
+        <a class="choice paper" href="#/photo"><div class="icon">${ICON.image}</div><img class="peek" src="${dogSrc(peeks[3] || 'bichon')}" alt=""><b>传张照片</b><span>选一张照片，帮你写成歌</span></a>
       </div>
       <form class="find" id="find">
         <div class="find-pill">
@@ -292,7 +294,7 @@
 
   function coverHtml(j) {
     if (j.hasCover) return `<img class="photo" src="${fileUrl(j, 'cover')}${j.coverVer ? '&v=' + j.coverVer : ''}" alt="封面">`;
-    if (j.hasDrawing) return `<img src="${fileUrl(j, 'drawing')}" alt="${esc(j.name)}画的画">`;
+    if (j.hasDrawing) return `<img ${j.kind === 'photo' ? 'class="photo" ' : ''}src="${fileUrl(j, 'drawing')}" alt="${esc(j.name)}${j.kind === 'photo' ? '的照片' : '画的画'}">`;
     return `<img class="dog" src="${dogSrc(j.dog)}" alt="">`;
   }
   function statusChip(j) {
@@ -432,7 +434,7 @@
     const p = store.get('profile');
     const out = $('#result');
     btn.disabled = true;
-    const doing = req.kind === 'lyrics' ? '正在看你的歌词' : '正在写歌词';
+    const doing = req.kind === 'lyrics' ? '正在看你的歌词' : req.kind === 'photo' ? '正在看你的照片、写歌词' : '正在写歌词';
     out.innerHTML = `<div class="paper card loading"><img src="${dogSrc(p.dog)}" alt="">${esc(dogName(p.dog))}${doing}，大约半分钟，请稍等…</div>`;
     out.scrollIntoView({ behavior: 'smooth', block: 'start' });
     try {
@@ -458,7 +460,7 @@
     const out = $('#result');
     out.innerHTML = `
       <section class="paper card lyrics-card">
-        ${r.picture ? `<div class="saw">你画的是：${esc(r.picture)}</div>` : ''}
+        ${r.picture ? `<div class="saw">${req.kind === 'photo' ? '照片里有' : '你画的是'}：${esc(r.picture)}</div>` : ''}
         ${req.kind === 'lyrics' ? `<div class="saw">${r.kept ? '你的歌词很完整，一个字没改，只标上了哪段是主歌、哪段是副歌。' : '你写的句子都留着，帮你接着写成了一整首。'}</div>` : ''}
         <label class="title-edit">
           <span>歌名</span>
@@ -483,6 +485,7 @@
       const clearDraft = () => {
         if (req.kind === 'story') draft.story = '';
         else if (req.kind === 'lyrics') { draft.lyrics = ''; draft.title = ''; }
+        else if (req.kind === 'photo') { draft.photoWords = ''; photo.image = ''; }
         else { draft.words = ''; pad.clear(); }
         saveDraft();
       };
@@ -503,6 +506,54 @@
           toast(err.message);
         }
       }
+    });
+  }
+
+  // ---------- photo ----------
+  const photo = { image: '' }; // kept in memory so the choice survives going back and forth
+
+  function renderPhoto() {
+    const state = { style: store.get('pref.style', 'nostalgic'), voice: store.get('pref.voice', 'any') };
+    view.innerHTML = `
+      <a class="back" href="#/">${ICON.left}首页</a>
+      <section class="paper card">
+        <h1>选一张照片</h1>
+        <p class="hint">老照片、今天拍的、一家人的合影都可以。我们会看看照片里有什么，帮你写成一首歌，照片会当作这首歌的封面。</p>
+        <div class="photo-box" id="photo-box"></div>
+        <label class="btn primary big block photo-pick">${ICON.image}<span id="pick-label">选照片</span><input type="file" accept="image/*" id="photo-file" hidden></label>
+      </section>
+      <section class="paper card">
+        <h2>这张照片是什么？</h2>
+        <p class="hint">可以不说。说一句是谁、在哪里、什么时候，歌词会写得更贴切。</p>
+        <textarea id="photo-words" style="min-height:120px">${esc(draft.photoWords || '')}</textarea>
+      </section>
+      ${styleCardHtml(state)}
+      <button class="btn primary big block" id="write">${ICON.music} 选好了，帮我写歌词</button>
+      <div id="result"></div>`;
+    const box = $('#photo-box');
+    const show = () => {
+      box.innerHTML = photo.image ? `<img src="${photo.image}" alt="你选的照片">` : '';
+      box.hidden = !photo.image;
+      $('#pick-label').textContent = photo.image ? '换一张' : '选照片';
+    };
+    show();
+    $('#photo-file').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try { photo.image = await shrinkImage(file, 1200); show(); }
+      catch (err) { toast(err.message || '这张照片用不了，换一张试试'); }
+      e.target.value = '';
+    });
+    const ta = $('#photo-words');
+    ta.addEventListener('input', () => { draft.photoWords = ta.value; });
+    const sync = setInterval(() => { draft.photoWords = ta.value; saveDraft(); }, 800);
+    cleanup = () => clearInterval(sync);
+    bindChips(view, state);
+    bindStyles(view, state);
+    $('#write').addEventListener('click', () => {
+      if (!photo.image) return toast('先选一张照片吧');
+      draft.photoWords = ta.value.trim();
+      writeLyrics({ kind: 'photo', story: draft.photoWords, image: photo.image, ...state }, $('#write'));
     });
   }
 
@@ -661,7 +712,7 @@
       if (!alive) return;
       if (!shared) rememberSong(j.code);
       const done = j.status === 'done' && j.hasAudio;
-      const who = `${esc(j.name)}${({ drawing: '画', lyrics: '写' })[j.kind] || '讲'}的`;
+      const who = j.kind === 'photo' ? `${esc(j.name)}的照片` : `${esc(j.name)}${({ drawing: '画', lyrics: '写' })[j.kind] || '讲'}的`;
       view.innerHTML = `
         ${back}
         <section class="paper song-hero">

@@ -63,7 +63,7 @@
           <h3>${j.id} ·《${esc(j.title)}》</h3>
           <span class="chip-status ${j.status}">${j.status === 'done' ? '已完成' : '待做'}</span>
         </div>
-        <div class="meta-line">取歌号码 <b>${esc(j.code || '—')}</b> · ${j.public ? '已公开' : '不公开'} · ${esc(j.name)} · ${({ drawing: '画', lyrics: '自己写的词' })[j.kind] || '故事'} · ${when}</div>
+        <div class="meta-line">取歌号码 <b>${esc(j.code || '—')}</b> · ${j.public ? '已公开' : '不公开'} · ${esc(j.name)} · ${({ drawing: '画', lyrics: '自己写的词', photo: '照片' })[j.kind] || '故事'} · ${when}</div>
         ${field('歌名 Title', j.title, 'title')}
         ${field('风格 Style of Music', j.tags, 'tags')}
         ${field('歌词 Lyrics', j.lyrics, 'lyrics')}
