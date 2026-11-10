@@ -1,10 +1,26 @@
 # 怪狗唱片
 
-给家里长辈用的小网站：讲一个故事（可以直接说话），或者在 iPad 上画一幅画，DeepSeek 把它写成歌词。你在 Suno 里手动生成，再把 mp3 传回来，长辈凭编号收听和下载。
+讲一个故事、画一幅画、自己写几句词，或者传一张照片，DeepSeek 把它写成歌词；小高在 Suno 里亲手做成歌，传回来，大家凭取歌号码收听和下载。
+
+## 入口
+
+| | 网址 |
+|---|---|
+| **做歌（国内国外都用这个）** | https://guaigou-songs.pages.dev/ |
+| 做歌（备用，国内做不了歌） | https://ruiling-smartbear.github.io/guaigou-songs/ |
+| 待做清单（要管理口令） | https://guaigou-songs.pages.dev/admin.html |
+
+想让对方打开就带上名字，在网址后面加 `?name=称呼`，比如 `https://guaigou-songs.pages.dev/?name=姥姥`。
+
+两个做歌网址用的是同一个后端、同一份歌、同一个额度。区别只在线路：国内网络连不上 `*.workers.dev`，所以要走 `pages.dev` 那个。
+
+## 这个仓库里有什么
 
 ```
-docs/      网页（GitHub Pages）：长辈端 index.html，你的待做清单 admin.html
-worker/    后端（Cloudflare Worker + R2）：保管 API key、写歌词、存画和 mp3
+docs/      网页：做歌的页面 index.html，待做清单 admin.html
+worker/    后端（Cloudflare Worker + KV）：保管 API key、写歌词、存画、照片和 mp3
+pages/     Cloudflare Pages 的入口：网页和 /api/ 走同一个地址
+tools/     每日待做提醒、自动上传、风格列表
 ```
 
 ## 本地试用
