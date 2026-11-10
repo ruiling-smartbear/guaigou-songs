@@ -17,7 +17,7 @@
   const COLORS = ['#1d1a16', '#e2553f', '#f0a23a', '#f4d03f', '#3f9b5a', '#69c8ef', '#2457c9', '#9b59b6', '#f19bb5', '#8a5a2b'];
 
   const ICON = {
-    mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+    chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/></svg>',
     brush: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6-8.5 8.5a3 3 0 0 1-2 .9L5 20l.6-4.5a3 3 0 0 1 .9-2Z"/><path d="M12 6l6 6"/></svg>',
     play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>',
     pause: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4.5" height="16" rx="1"/><rect x="13.5" y="4" width="4.5" height="16" rx="1"/></svg>',
@@ -180,7 +180,7 @@
     view.innerHTML = `
       <div class="hello"><img src="${dogSrc(p.dog)}" alt=""><div><p class="on-felt" style="margin:0">你好，${esc(p.name)}！</p><h1 class="on-felt">今天想做一首什么歌？</h1></div></div>
       <div class="choices">
-        <a class="choice paper" href="#/story"><div class="icon">${ICON.mic}</div><img class="peek" src="${dogSrc(peeks[0])}" alt=""><b>讲个故事</b><span>说一件事，帮你写成歌</span></a>
+        <a class="choice paper" href="#/story"><div class="icon">${ICON.chat}</div><img class="peek" src="${dogSrc(peeks[0])}" alt=""><b>讲个故事</b><span>说一件事，帮你写成歌</span></a>
         <a class="choice paper" href="#/draw"><div class="icon">${ICON.brush}</div><img class="peek" src="${dogSrc(peeks[1])}" alt=""><b>画一幅画</b><span>画完了，帮你给画写首歌</span></a>
         <a class="choice paper" href="#/write"><div class="icon">${ICON.pen}</div><img class="peek" src="${dogSrc(peeks[2])}" alt=""><b>自己写词</b><span>写好的直接唱，没写完的帮你补完</span></a>
       </div>
@@ -305,59 +305,6 @@
       <div class="t">${esc(j.title)}</div><div class="n">${mine ? `号码 ${j.code}${j.public ? ' · 已公开' : ''}` : esc(j.name)}</div>`;
   }
 
-  // ---------- voice input ----------
-  function attachMic(textarea, button) {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const label = button.innerHTML;
-    if (!SR) {
-      button.addEventListener('click', () => {
-        textarea.focus();
-        toast('这台设备不能直接听，请点键盘上的 🎤 话筒说话');
-      });
-      return () => {};
-    }
-    let rec = null, listening = false, committed = '';
-    const setUi = () => {
-      button.classList.toggle('on', listening);
-      button.innerHTML = listening ? `${ICON.mic} 正在听你说…说完了按这里` : label;
-    };
-    const start = () => {
-      rec = new SR();
-      rec.lang = 'zh-CN';
-      rec.continuous = true;
-      rec.interimResults = true;
-      committed = textarea.value;
-      rec.onresult = (e) => {
-        let interim = '';
-        for (let i = e.resultIndex; i < e.results.length; i++) {
-          const t = e.results[i][0].transcript;
-          if (e.results[i].isFinal) committed += t; else interim += t;
-        }
-        textarea.value = committed + interim;
-      };
-      rec.onerror = (e) => {
-        if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
-          listening = false; setUi();
-          toast('请在弹出的提示里点「允许」，才能听到你说话');
-        } else if (e.error === 'no-speech') {
-          // keep listening; onend restarts
-        }
-      };
-      rec.onend = () => {
-        textarea.value = committed;
-        if (listening) { try { start(); } catch { listening = false; setUi(); } }
-      };
-      rec.start();
-    };
-    const stop = () => { listening = false; setUi(); try { rec && rec.stop(); } catch {} };
-    button.addEventListener('click', () => {
-      if (listening) return stop();
-      listening = true; setUi();
-      try { start(); } catch { stop(); toast('没听到，请再按一次'); }
-    });
-    return stop;
-  }
-
   function chipsHtml(name, opts, current, front = opts.length) {
     const chip = ([id, l]) => `<button type="button" class="chip" data-v="${id}" aria-pressed="${id === current}">${l}</button>`;
     const open = opts.findIndex(([id]) => id === current) >= front;
@@ -432,9 +379,8 @@
       <a class="back" href="#/">${ICON.left}首页</a>
       <section class="paper card">
         <h1>讲一个故事</h1>
-        <p class="hint">按下面的蓝色按钮，像聊天一样说就行。比如：今天发生的一件事、家里的小狗、很久以前的老房子。</p>
+        <p class="hint">像聊天一样写下来就行。比如：今天发生的一件事、家里的小狗、很久以前的老房子。不想打字的话，点键盘上的话筒也能说话。</p>
         <div class="talk">
-          <button type="button" class="btn big mic block" id="mic">${ICON.mic} 按这里，开始说话</button>
           <textarea id="story" placeholder="顺着薄扶林道看下去，能看到纸片楼的缝隙里的紫色晚霞，和远处一点点海">${esc(draft.story)}</textarea>
         </div>
       </section>
@@ -443,13 +389,11 @@
       <div id="result"></div>`;
     const ta = $('#story');
     ta.addEventListener('input', () => { draft.story = ta.value; });
-    const stopMic = attachMic(ta, $('#mic'));
     const sync = setInterval(() => { draft.story = ta.value; saveDraft(); }, 800);
-    cleanup = () => { stopMic(); clearInterval(sync); };
+    cleanup = () => clearInterval(sync);
     bindChips(view, state);
     bindStyles(view, state);
     $('#write').addEventListener('click', () => {
-      stopMic();
       draft.story = ta.value.trim();
       if (draft.story.length < 6) return toast('再多说几句，歌词会写得更好');
       writeLyrics({ kind: 'story', story: draft.story, ...state }, $('#write'));
@@ -466,20 +410,17 @@
         <p class="hint">整首都写好了，就一字不改直接做成歌；只写了几句，就保留你的句子，帮你接着写完。</p>
         <input type="text" id="own-title" class="title-input" maxlength="20" placeholder="歌名（不填就帮你起一个）" value="${esc(draft.title)}" autocomplete="off">
         <textarea id="own" style="min-height:300px" placeholder="一句一行，比如：\n门前一棵大树\n夏天知了叫不停">${esc(draft.lyrics)}</textarea>
-        <div style="margin-top:12px"><button type="button" class="btn mic block" id="mic">${ICON.mic} 不想打字？按这里念出来</button></div>
       </section>
       ${styleCardHtml(state)}
       <button class="btn primary big block" id="write">${ICON.music} 写好了，下一步</button>
       <div id="result"></div>`;
     const ta = $('#own');
     ta.addEventListener('input', () => { draft.lyrics = ta.value; });
-    const stopMic = attachMic(ta, $('#mic'));
     const sync = setInterval(() => { draft.lyrics = ta.value; saveDraft(); }, 800);
-    cleanup = () => { stopMic(); clearInterval(sync); };
+    cleanup = () => clearInterval(sync);
     bindChips(view, state);
     bindStyles(view, state);
     $('#write').addEventListener('click', () => {
-      stopMic();
       draft.lyrics = ta.value.trim();
       if (draft.lyrics.length < 4) return toast('先写几句歌词吧');
       draft.title = $('#own-title').value.trim();
@@ -666,7 +607,6 @@
         <h2>你画的是什么？</h2>
         <p class="hint">可以不说，我们会自己看你的画。说一句，歌词会写得更贴切。</p>
         <div class="talk">
-          <button type="button" class="btn mic block" id="mic">${ICON.mic} 按这里，开始说话</button>
           <textarea id="words" style="min-height:120px">${esc(draft.words)}</textarea>
         </div>
       </section>
@@ -692,13 +632,11 @@
     });
     const ta = $('#words');
     ta.addEventListener('input', () => { draft.words = ta.value; });
-    const stopMic = attachMic(ta, $('#mic'));
     const sync = setInterval(() => { draft.words = ta.value; saveDraft(); }, 800);
-    cleanup = () => { stopMic(); clearInterval(sync); };
+    cleanup = () => clearInterval(sync);
     bindChips(view, state);
     bindStyles(view, state);
     $('#write').addEventListener('click', () => {
-      stopMic();
       if (pad.isEmpty()) return toast('先在白纸上画点东西吧');
       draft.words = ta.value.trim();
       writeLyrics({ kind: 'drawing', story: draft.words, image: pad.toDataUrl(), ...state }, $('#write'));

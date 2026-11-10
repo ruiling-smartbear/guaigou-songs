@@ -176,9 +176,6 @@ input:focus, textarea:focus { border-color: var(--felt); }
 input:focus-visible, textarea:focus-visible { outline: none; }
 textarea { min-height: 220px; resize: vertical; }
 .talk { display: grid; gap: 12px; }
-.mic { background: var(--felt); color: var(--cream-hi); }
-.mic.on { background: var(--red); animation: pulse 1.2s infinite; }
-@keyframes pulse { 50% { box-shadow: 0 5px 0 rgba(0,0,0,.22), 0 0 0 10px rgba(226,85,63,.25); } }
 
 .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 14px; }
 .chip {
