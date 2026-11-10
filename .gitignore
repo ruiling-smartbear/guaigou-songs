@@ -14,3 +14,6 @@ harness-kit/.handed.json
 guaigou-reminder-kit/
 pages/dist/
 pages/.wrangler/
+
+# 自动做歌的日志和状态（本机用，不进仓库）
+logs/

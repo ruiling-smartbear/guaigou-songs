@@ -809,7 +809,7 @@
         return;
       }
       if (!alive) return;
-      if (!shared) rememberSong(j.code);
+      if (!shared && ownerKeys.get(j.code)) rememberSong(j.code); // 只记本设备提交的歌，看别人的不混进来
       const done = j.status === 'done' && j.hasAudio;
       const who = j.kind === 'photo' ? `${esc(j.name)}的照片` : `${esc(j.name)}${({ drawing: '画', lyrics: '写' })[j.kind] || '讲'}的`;
       view.innerHTML = `
