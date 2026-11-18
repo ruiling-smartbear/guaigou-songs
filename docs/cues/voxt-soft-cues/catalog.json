@@ -482,8 +482,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.587,
-      "audible": 0.554,
+      "duration": 0.575,
+      "audible": 0.541,
       "desc": {
         "en": "Soft two-note glockenspiel cue",
         "zh": "软槌钟琴，清脆"
@@ -493,7 +493,7 @@
         "stop"
       ],
       "pair": "soft-glock-start",
-      "sha256": "3c003e9cc77cf8921ab79592f80055d48cb8fa1182a890b0569b7fb735a0c88c"
+      "sha256": "863027f7e8bafcfb50eb9f9893d669fac0145047a4b0191c3acd50a72f3a80f2"
     },
     {
       "id": "soft-xylophone-start",
