@@ -100,8 +100,8 @@
         "soft",
         "wood"
       ],
-      "duration": 0.548,
-      "audible": 0.479,
+      "duration": 0.562,
+      "audible": 0.516,
       "desc": {
         "en": "Soft two-note wood cue",
         "zh": "软槌木琴"
@@ -111,7 +111,7 @@
         "start"
       ],
       "pair": "soft-wood-stop",
-      "sha256": "3f379b334010d9f0e37eae813cc58fbae6e1da7fb09c6cfd156c96363831050a"
+      "sha256": "13ddfdbc501d8e6e0d7448d72fba100fd78ef2b465db10f1ebaf447fe5c0651d"
     },
     {
       "id": "soft-wood-stop",
@@ -126,8 +126,8 @@
         "soft",
         "wood"
       ],
-      "duration": 0.527,
-      "audible": 0.483,
+      "duration": 0.571,
+      "audible": 0.512,
       "desc": {
         "en": "Soft two-note wood cue",
         "zh": "软槌木琴"
@@ -137,7 +137,7 @@
         "stop"
       ],
       "pair": "soft-wood-start",
-      "sha256": "609ca83df81b4cfd9963dd0d557bff193a1a522ab3193064fd311232dc122ba5"
+      "sha256": "f67f2a1b8f72d3c2308486eb2bae4c919609e48872333b2f57e2b1623e4d04dd"
     },
     {
       "id": "soft-vibes-start",
@@ -151,8 +151,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.609,
-      "audible": 0.57,
+      "duration": 0.661,
+      "audible": 0.627,
       "desc": {
         "en": "Soft two-note vibraphone cue",
         "zh": "毛线槌颤音琴，带轻微颤动"
@@ -162,7 +162,7 @@
         "start"
       ],
       "pair": "soft-vibes-stop",
-      "sha256": "7307b56b838044a3a8b7a749f0970bac9a3080bcbe3147683cb14f75c4f3cfc5"
+      "sha256": "f409fbc1a0946cf8bcad256163be932af498c17776d6d2798d6ab16f4380bd65"
     },
     {
       "id": "soft-vibes-stop",
@@ -176,8 +176,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.677,
-      "audible": 0.621,
+      "duration": 0.701,
+      "audible": 0.649,
       "desc": {
         "en": "Soft two-note vibraphone cue",
         "zh": "毛线槌颤音琴，带轻微颤动"
@@ -187,7 +187,7 @@
         "stop"
       ],
       "pair": "soft-vibes-start",
-      "sha256": "38dea49c9e2d2c95bc71aec38282f50e36fc55e3c693d657ffb00db62a55f711"
+      "sha256": "387a8b9f40b89107add41b0c795a2fbab54965db3753a4da903afe1fe8bb39d5"
     },
     {
       "id": "soft-bowl-start",
@@ -201,8 +201,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.647,
-      "audible": 0.566,
+      "duration": 0.631,
+      "audible": 0.602,
       "desc": {
         "en": "Soft two-note singing bowl cue",
         "zh": "木棒轻敲颂钵，有金属共振"
@@ -212,7 +212,7 @@
         "start"
       ],
       "pair": "soft-bowl-stop",
-      "sha256": "fd4f915b4430eeee2bd3b41d11bd4c842153bf4cfcf1ed9e9349baf9a2a86f06"
+      "sha256": "a5f9837c31620e68366ad994f4df6866a5dd4cd7d829231efcd4b5cf7271d5e5"
     },
     {
       "id": "soft-bowl-stop",
@@ -226,8 +226,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.672,
-      "audible": 0.617,
+      "duration": 0.713,
+      "audible": 0.669,
       "desc": {
         "en": "Soft two-note singing bowl cue",
         "zh": "木棒轻敲颂钵，有金属共振"
@@ -237,7 +237,7 @@
         "stop"
       ],
       "pair": "soft-bowl-start",
-      "sha256": "ef0f8a551f900781be57793ee6dc6e4ff13f5b9647346568f710d3aad50f687d"
+      "sha256": "4c019e1662457f1c5126632d1bf0d4101ba7e1bbd6c16d00ef93f01bc20d58dd"
     },
     {
       "id": "soft-woodblock-start",
@@ -263,7 +263,7 @@
         "start"
       ],
       "pair": "soft-woodblock-stop",
-      "sha256": "09721a8683688f2c0620cdffa2617c6ede17e28b152cefb6d629131c9f688225"
+      "sha256": "76ba28fa288653871114042661faa334060dacc1af7d260bb4ccd7695d848d15"
     },
     {
       "id": "soft-woodblock-stop",
@@ -289,7 +289,7 @@
         "stop"
       ],
       "pair": "soft-woodblock-start",
-      "sha256": "f403a486f20afc9393db20d1a7b4c6c5e7a1e6903609b75729d8b22b0d2f7795"
+      "sha256": "1bc63becf6225da691d6b2f2aad42a88fead92ae1786a2d8edbd9cb675ee5684"
     },
     {
       "id": "soft-musicbox-start",
@@ -303,8 +303,8 @@
         "two-note",
         "bright"
       ],
-      "duration": 0.599,
-      "audible": 0.566,
+      "duration": 0.628,
+      "audible": 0.586,
       "desc": {
         "en": "Soft two-note music box cue",
         "zh": "八音盒，清亮"
@@ -314,7 +314,7 @@
         "start"
       ],
       "pair": "soft-musicbox-stop",
-      "sha256": "18a4ef32d7c4c9e4d52e6ebf8c31ebf8778d433dc2dec4603a9bc878ccde1152"
+      "sha256": "95c7b7139423efa85d7aeec7fa33461b5cfdeb159c5487afc5d6d7e4c0f7643c"
     },
     {
       "id": "soft-musicbox-stop",
@@ -328,8 +328,8 @@
         "two-note",
         "bright"
       ],
-      "duration": 0.57,
-      "audible": 0.506,
+      "duration": 0.608,
+      "audible": 0.575,
       "desc": {
         "en": "Soft two-note music box cue",
         "zh": "八音盒，清亮"
@@ -339,7 +339,7 @@
         "stop"
       ],
       "pair": "soft-musicbox-start",
-      "sha256": "93c848ab0d0c4f4d7fca8f435ab855753814dbd30773489b79438235fba06705"
+      "sha256": "254729faa45b11f115a6ac82afa7e2206029e0d548ccd5401dcbeff24252a2d7"
     },
     {
       "id": "soft-kalimba-start",
@@ -353,8 +353,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.595,
-      "audible": 0.537,
+      "duration": 0.614,
+      "audible": 0.567,
       "desc": {
         "en": "Soft two-note kalimba cue",
         "zh": "拨片"
@@ -364,7 +364,7 @@
         "start"
       ],
       "pair": "soft-kalimba-stop",
-      "sha256": "a3906ee221e2f535cdeddfe1fb5768c49dd62b3c82cc2ae5455615c81aed94d2"
+      "sha256": "45ac6829fd95b8adf6ce285c3258f06996cea9e75e2241f300d2b93f94f07043"
     },
     {
       "id": "soft-kalimba-stop",
@@ -378,8 +378,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.575,
-      "audible": 0.548,
+      "duration": 0.626,
+      "audible": 0.591,
       "desc": {
         "en": "Soft two-note kalimba cue",
         "zh": "拨片"
@@ -389,7 +389,7 @@
         "stop"
       ],
       "pair": "soft-kalimba-start",
-      "sha256": "46be475c82e88feafc8d92d5dba87323e21097cfdaf0de11cfce319cf089a0b6"
+      "sha256": "4e278d0efd221f5351b99f79e746146347c869536dd1101b43bf5c3b79df3455"
     },
     {
       "id": "soft-celesta-start",
@@ -404,8 +404,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.556,
-      "audible": 0.52,
+      "duration": 0.619,
+      "audible": 0.582,
       "desc": {
         "en": "Soft two-note celesta cue",
         "zh": "轻巧的小铃声"
@@ -415,7 +415,7 @@
         "start"
       ],
       "pair": "soft-celesta-stop",
-      "sha256": "4890b89b27a9db231b7997cd6c21121cc05968067f1998d20c472149828d50cc"
+      "sha256": "27bd934b409f6fdf70e885fe3652f7868682978ae029ea5336f6853f5a57b050"
     },
     {
       "id": "soft-celesta-stop",
@@ -430,8 +430,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.555,
-      "audible": 0.515,
+      "duration": 0.549,
+      "audible": 0.52,
       "desc": {
         "en": "Soft two-note celesta cue",
         "zh": "轻巧的小铃声"
@@ -441,7 +441,7 @@
         "stop"
       ],
       "pair": "soft-celesta-start",
-      "sha256": "9676ac1ced58ccaae74d440e71f0407ced723b0314aac87ad52ed22bd45805ea"
+      "sha256": "65e60f02e7cdffed81e0ea99e65e75ae082a139797a6fb2177f71fb56d98efa6"
     },
     {
       "id": "soft-glock-start",
@@ -456,8 +456,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.544,
-      "audible": 0.51,
+      "duration": 0.611,
+      "audible": 0.574,
       "desc": {
         "en": "Soft two-note glockenspiel cue",
         "zh": "软槌钟琴，清脆"
@@ -467,7 +467,7 @@
         "start"
       ],
       "pair": "soft-glock-stop",
-      "sha256": "1bf480340d185f14c42c4a26be00a9bb073db10ac7df395da48610cd82d0edf2"
+      "sha256": "5a5fef9fb7ba5455c35181a4995c2bd7adc3a68423afb80d27d4654788eb43c6"
     },
     {
       "id": "soft-glock-stop",
@@ -482,8 +482,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.577,
-      "audible": 0.534,
+      "duration": 0.587,
+      "audible": 0.554,
       "desc": {
         "en": "Soft two-note glockenspiel cue",
         "zh": "软槌钟琴，清脆"
@@ -493,7 +493,7 @@
         "stop"
       ],
       "pair": "soft-glock-start",
-      "sha256": "3e4860b444733f07a221b9a4a9849296104a9a095068a67bef65bd9c7bd8f806"
+      "sha256": "3c003e9cc77cf8921ab79592f80055d48cb8fa1182a890b0569b7fb735a0c88c"
     },
     {
       "id": "soft-xylophone-start",
@@ -519,7 +519,7 @@
         "start"
       ],
       "pair": "soft-xylophone-stop",
-      "sha256": "9a56e93947ad27db43192261624478b777c45ec631f497839e3c15ac0256f3c0"
+      "sha256": "de4e0cb35d9d92eb556030e512daa9834190e47262d9cd8438c0cee363dd6c8a"
     },
     {
       "id": "soft-xylophone-stop",
@@ -534,7 +534,7 @@
         "wood",
         "short"
       ],
-      "duration": 0.453,
+      "duration": 0.452,
       "audible": 0.417,
       "desc": {
         "en": "Soft two-note xylophone cue",
@@ -545,7 +545,7 @@
         "stop"
       ],
       "pair": "soft-xylophone-start",
-      "sha256": "1fcf906180993d3be743f466e9bed8acc155c1a2090047cfe2459f761798f067"
+      "sha256": "3116078fb78c4736dfd88b13613cf7ef5e72f6f0ef9b0a760800db040b3db3f5"
     },
     {
       "id": "soft-steeldrum-start",
@@ -559,8 +559,8 @@
         "two-note",
         "short"
       ],
-      "duration": 0.546,
-      "audible": 0.514,
+      "duration": 0.565,
+      "audible": 0.524,
       "desc": {
         "en": "Soft two-note steel drum cue",
         "zh": "圆润有弹性"
@@ -570,7 +570,7 @@
         "start"
       ],
       "pair": "soft-steeldrum-stop",
-      "sha256": "e2db00d8a0dad6f86ab8c8aff7b02a3db8710c1c962a159e3dba47213ac6474a"
+      "sha256": "35501427689da8b1aa13e7822d75ad8cd962c6918dc7734af5e5bb6e814d7fb8"
     },
     {
       "id": "soft-steeldrum-stop",
@@ -584,8 +584,8 @@
         "two-note",
         "short"
       ],
-      "duration": 0.535,
-      "audible": 0.495,
+      "duration": 0.554,
+      "audible": 0.519,
       "desc": {
         "en": "Soft two-note steel drum cue",
         "zh": "圆润有弹性"
@@ -595,7 +595,7 @@
         "stop"
       ],
       "pair": "soft-steeldrum-start",
-      "sha256": "70f9cea1e8930a4b5dd59219662b3e57e63fec0aa9e62cfbcb8a4502f2c7c987"
+      "sha256": "2abdbf10fd3c8d65b11572b3d90734cd205dd69ddd552d78980f683b24354b68"
     },
     {
       "id": "soft-guzheng-start",
@@ -609,8 +609,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.593,
-      "audible": 0.56,
+      "duration": 0.657,
+      "audible": 0.618,
       "desc": {
         "en": "Soft two-note guzheng cue",
         "zh": "柔化的古筝拨弦，不那么写实"
@@ -620,7 +620,7 @@
         "start"
       ],
       "pair": "soft-guzheng-stop",
-      "sha256": "64fd705ddcd7dc75296e73285c5fb4a0b7ef183dfc264751d9a988e54d9afd66"
+      "sha256": "a42b15a41b2c038e780f08c3487bd3aa07ddba17f81f3c55522188f991ddf116"
     },
     {
       "id": "soft-guzheng-stop",
@@ -634,8 +634,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.59,
-      "audible": 0.545,
+      "duration": 0.586,
+      "audible": 0.557,
       "desc": {
         "en": "Soft two-note guzheng cue",
         "zh": "柔化的古筝拨弦，不那么写实"
@@ -645,7 +645,7 @@
         "stop"
       ],
       "pair": "soft-guzheng-start",
-      "sha256": "2b15b7517734ea51376fb6efda6942ade1c106f02b30b0e06384d9147b38758c"
+      "sha256": "6225541a513ed31db12e5e3e0a825c5df5bd38448b2e526b21acf26ce754fd68"
     },
     {
       "id": "soft-muted-guitar-start",
@@ -661,7 +661,7 @@
         "low"
       ],
       "duration": 0.505,
-      "audible": 0.462,
+      "audible": 0.472,
       "desc": {
         "en": "Soft two-note muted guitar cue",
         "zh": "手掌闷住的吉他拨弦，暗、很顿"
@@ -671,7 +671,7 @@
         "start"
       ],
       "pair": "soft-muted-guitar-stop",
-      "sha256": "862e6cc50447a7712d9475661c951a8a7657f695d88e58c7263c3ccbb2f32338"
+      "sha256": "1f370f1a8bd540ce97fe52773f75dd51f1c8dcb853841d4fd3a00ed593f7a0d9"
     },
     {
       "id": "soft-muted-guitar-stop",
@@ -686,8 +686,8 @@
         "short",
         "low"
       ],
-      "duration": 0.497,
-      "audible": 0.457,
+      "duration": 0.517,
+      "audible": 0.483,
       "desc": {
         "en": "Soft two-note muted guitar cue",
         "zh": "手掌闷住的吉他拨弦，暗、很顿"
@@ -697,7 +697,7 @@
         "stop"
       ],
       "pair": "soft-muted-guitar-start",
-      "sha256": "1e4d9a9b1f69b2ec3a9b86921a2d2c3ca80b462932d304da3f696c53abdaa78a"
+      "sha256": "0d8287d55d8b4da0590eb5d477293f1ca6baa2397a2932a073234e81d9a4347c"
     },
     {
       "id": "soft-toy-piano-start",
@@ -712,8 +712,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.514,
-      "audible": 0.463,
+      "duration": 0.536,
+      "audible": 0.495,
       "desc": {
         "en": "Soft two-note toy piano cue",
         "zh": "可爱的小金属棒"
@@ -723,7 +723,7 @@
         "start"
       ],
       "pair": "soft-toy-piano-stop",
-      "sha256": "0ecfe11cc253da366a6d4176ce788d049fdc5e0a2393abe53bac19a6febaf0d7"
+      "sha256": "8a87df8cbe7de8a544d047e6e846f198e38e020a691b715e0a94478dd634e67f"
     },
     {
       "id": "soft-toy-piano-stop",
@@ -738,8 +738,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.519,
-      "audible": 0.465,
+      "duration": 0.506,
+      "audible": 0.472,
       "desc": {
         "en": "Soft two-note toy piano cue",
         "zh": "可爱的小金属棒"
@@ -749,7 +749,7 @@
         "stop"
       ],
       "pair": "soft-toy-piano-start",
-      "sha256": "8e4e1d5594003fca8aa03af821099d4cba5d55b09e9c59d622048dc86a081846"
+      "sha256": "fd7f934fb485551c085affed6520ba0b29cbf56d9c32e915e827420f3f69ca5f"
     },
     {
       "id": "soft-bamboo-start",
@@ -775,7 +775,7 @@
         "start"
       ],
       "pair": "soft-bamboo-stop",
-      "sha256": "9b69804b0bbb23215d3452f71ddd5c40f4cd9e56c23a6a5dcc64ec512c1234ec"
+      "sha256": "ff8f3aea2fdc305919c36852a5ab513e309b02c9af995043256f79e0145ba904"
     },
     {
       "id": "soft-bamboo-stop",
@@ -791,7 +791,7 @@
         "short"
       ],
       "duration": 0.474,
-      "audible": 0.445,
+      "audible": 0.44,
       "desc": {
         "en": "Soft two-note bamboo cue",
         "zh": "空心竹子的笃笃声"
@@ -801,7 +801,7 @@
         "stop"
       ],
       "pair": "soft-bamboo-start",
-      "sha256": "a22accad43ae8876d5d3138019425f79e25dfbdad374737690e7ff340f411544"
+      "sha256": "075ce22190f138857918a176d31c78bb2118308bc6325c8fa2598e92510bff86"
     },
     {
       "id": "soft-ocarina-start",
@@ -815,8 +815,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.635,
-      "audible": 0.581,
+      "duration": 0.674,
+      "audible": 0.642,
       "desc": {
         "en": "Soft two-note ocarina cue",
         "zh": "带气声的圆润笛音"
@@ -826,7 +826,7 @@
         "start"
       ],
       "pair": "soft-ocarina-stop",
-      "sha256": "5939440abb0e72d34380eb348995f3f57cd6e499d74e2f2c5edaa13d0d1926a9"
+      "sha256": "a6eac120c8b886fdf5201e3e22728171bc370f591ea5a0ec67f0dba9c8151a0d"
     },
     {
       "id": "soft-ocarina-stop",
@@ -840,8 +840,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.663,
-      "audible": 0.608,
+      "duration": 0.704,
+      "audible": 0.609,
       "desc": {
         "en": "Soft two-note ocarina cue",
         "zh": "带气声的圆润笛音"
@@ -851,7 +851,7 @@
         "stop"
       ],
       "pair": "soft-ocarina-start",
-      "sha256": "6b2d448723972c1e8a2f0167a0660c608e915c918935e460be557a8ba9435e3a"
+      "sha256": "c3b33d3203bc150a23bc862bd35de18f5f8100e4a621da82b69334000fc585c0"
     },
     {
       "id": "soft-synth-pluck-start",
@@ -865,8 +865,8 @@
         "two-note",
         "short"
       ],
-      "duration": 0.508,
-      "audible": 0.47,
+      "duration": 0.521,
+      "audible": 0.459,
       "desc": {
         "en": "Soft two-note synth pluck cue",
         "zh": "现代 UI 风格的拨音，带轻微合唱感"
@@ -876,7 +876,7 @@
         "start"
       ],
       "pair": "soft-synth-pluck-stop",
-      "sha256": "e0a94cdafe8366eac3d71310cdbf39cdcd192b6419b12563e342052ff9d26d10"
+      "sha256": "d9c0a76f260d01b0d9f221849b745728f4c2398582d41a53c71f916accc27a1f"
     },
     {
       "id": "soft-synth-pluck-stop",
@@ -890,8 +890,8 @@
         "two-note",
         "short"
       ],
-      "duration": 0.462,
-      "audible": 0.431,
+      "duration": 0.486,
+      "audible": 0.455,
       "desc": {
         "en": "Soft two-note synth pluck cue",
         "zh": "现代 UI 风格的拨音，带轻微合唱感"
@@ -901,7 +901,7 @@
         "stop"
       ],
       "pair": "soft-synth-pluck-start",
-      "sha256": "6fb4adce0029092f30779bf65c3f77a2ca8f6c56017fc03d2256f5054655d4ba"
+      "sha256": "00778eaeb473ef6652e8fa21f5f82a8eb1c5a75707158402da8cb1130a17ad09"
     },
     {
       "id": "soft-agogo-start",
@@ -916,8 +916,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.505,
-      "audible": 0.475,
+      "duration": 0.504,
+      "audible": 0.457,
       "desc": {
         "en": "Soft two-note agogo cue",
         "zh": "高低双铃，轻快"
@@ -927,7 +927,7 @@
         "start"
       ],
       "pair": "soft-agogo-stop",
-      "sha256": "5d4166eca0e4206a70b0e5d4b61202cc49bb5740653d02064e044228cef8ecfe"
+      "sha256": "99f9ab36bdbedb88c2f44a00de6e318301819a2108e0175b8bf21d32e8b5a9ee"
     },
     {
       "id": "soft-agogo-stop",
@@ -942,8 +942,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.461,
-      "audible": 0.414,
+      "duration": 0.449,
+      "audible": 0.407,
       "desc": {
         "en": "Soft two-note agogo cue",
         "zh": "高低双铃，轻快"
@@ -953,7 +953,7 @@
         "stop"
       ],
       "pair": "soft-agogo-start",
-      "sha256": "5459f9aeb4cbfdf8b770b37d29e5619e6b79caa7d6916865eb3a6ea76d71be96"
+      "sha256": "cf3779da3f2bac5f9d6ef57541affe79cff8d6443834bc0a91510ea018852e72"
     },
     {
       "id": "soft-bloom-start",
@@ -967,8 +967,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.62,
-      "audible": 0.584,
+      "duration": 0.685,
+      "audible": 0.649,
       "desc": {
         "en": "Soft two-note bloom cue",
         "zh": "电钢琴三和弦，开始往上滚、结束往下滚"
@@ -978,7 +978,7 @@
         "start"
       ],
       "pair": "soft-bloom-stop",
-      "sha256": "42ab10349b76a9c0b338d0b5c0f79fa7b50fd89a307352dcebd73cfe990c2840"
+      "sha256": "22fa4f7ecd1355e43e4c545366866ec6f02614f37c58ba1b6d123c5ef182ee99"
     },
     {
       "id": "soft-bloom-stop",
@@ -992,8 +992,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.609,
-      "audible": 0.574,
+      "duration": 0.68,
+      "audible": 0.647,
       "desc": {
         "en": "Soft two-note bloom cue",
         "zh": "电钢琴三和弦，开始往上滚、结束往下滚"
@@ -1003,7 +1003,7 @@
         "stop"
       ],
       "pair": "soft-bloom-start",
-      "sha256": "f5bdec51e8fb553a3af301fe1a09cc8cbe2f19c53b73d063a211fa01dc362bd3"
+      "sha256": "6eed6449c1fbb46c4bb2ad4fd7639950d2b4093602a167758be3569b92837214"
     }
   ],
   "notice": "Soft two-note cues: original synthesized sounds."
