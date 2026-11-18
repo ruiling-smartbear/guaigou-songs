@@ -140,56 +140,6 @@
       "sha256": "609ca83df81b4cfd9963dd0d557bff193a1a522ab3193064fd311232dc122ba5"
     },
     {
-      "id": "soft-rhodes-start",
-      "file": "sounds/soft-rhodes-start.wav",
-      "name": {
-        "en": "Rhodes (start)",
-        "zh": "电钢琴（开始）"
-      },
-      "group": "soft",
-      "tags": [
-        "two-note",
-        "soft"
-      ],
-      "duration": 0.66,
-      "audible": 0.625,
-      "desc": {
-        "en": "Soft two-note rhodes cue",
-        "zh": "Rhodes 电钢琴，圆润"
-      },
-      "uses": [
-        "record.start",
-        "start"
-      ],
-      "pair": "soft-rhodes-stop",
-      "sha256": "b77db6383b6dda8f796e14c6810cebd6a1c301c6e8bd446a2beaeea7f45b5d15"
-    },
-    {
-      "id": "soft-rhodes-stop",
-      "file": "sounds/soft-rhodes-stop.wav",
-      "name": {
-        "en": "Rhodes (stop)",
-        "zh": "电钢琴（结束）"
-      },
-      "group": "soft",
-      "tags": [
-        "two-note",
-        "soft"
-      ],
-      "duration": 0.666,
-      "audible": 0.626,
-      "desc": {
-        "en": "Soft two-note rhodes cue",
-        "zh": "Rhodes 电钢琴，圆润"
-      },
-      "uses": [
-        "record.stop",
-        "stop"
-      ],
-      "pair": "soft-rhodes-start",
-      "sha256": "f76a4f8e29c498db9a8740e2fef53381788fab640c4c9ca23a189dd20c9bba27"
-    },
-    {
       "id": "soft-vibes-start",
       "file": "sounds/soft-vibes-start.wav",
       "name": {
@@ -226,8 +176,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.663,
-      "audible": 0.613,
+      "duration": 0.677,
+      "audible": 0.621,
       "desc": {
         "en": "Soft two-note vibraphone cue",
         "zh": "毛线槌颤音琴，带轻微颤动"
@@ -237,7 +187,7 @@
         "stop"
       ],
       "pair": "soft-vibes-start",
-      "sha256": "6a1d97b0104034f079d9165af416856da9214c3eaedaa5846d55c48fb8c355c9"
+      "sha256": "38dea49c9e2d2c95bc71aec38282f50e36fc55e3c693d657ffb00db62a55f711"
     },
     {
       "id": "soft-bowl-start",
