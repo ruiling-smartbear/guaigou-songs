@@ -598,56 +598,6 @@
       "sha256": "70f9cea1e8930a4b5dd59219662b3e57e63fec0aa9e62cfbcb8a4502f2c7c987"
     },
     {
-      "id": "soft-pizzicato-start",
-      "file": "sounds/soft-pizzicato-start.wav",
-      "name": {
-        "en": "Pizzicato (start)",
-        "zh": "拨弦提琴（开始）"
-      },
-      "group": "soft",
-      "tags": [
-        "two-note",
-        "short"
-      ],
-      "duration": 0.57,
-      "audible": 0.537,
-      "desc": {
-        "en": "Soft two-note pizzicato cue",
-        "zh": "提琴拨弦，干净利落"
-      },
-      "uses": [
-        "record.start",
-        "start"
-      ],
-      "pair": "soft-pizzicato-stop",
-      "sha256": "f6d8fa65559c6fec36064859e4c019c949860f9b0428da4e7a54c1fbc87baa67"
-    },
-    {
-      "id": "soft-pizzicato-stop",
-      "file": "sounds/soft-pizzicato-stop.wav",
-      "name": {
-        "en": "Pizzicato (stop)",
-        "zh": "拨弦提琴（结束）"
-      },
-      "group": "soft",
-      "tags": [
-        "two-note",
-        "short"
-      ],
-      "duration": 0.616,
-      "audible": 0.574,
-      "desc": {
-        "en": "Soft two-note pizzicato cue",
-        "zh": "提琴拨弦，干净利落"
-      },
-      "uses": [
-        "record.stop",
-        "stop"
-      ],
-      "pair": "soft-pizzicato-start",
-      "sha256": "2411ebfce197fc649c30d0cc0d657d68be492d2391f1983da3ff88923f1102e9"
-    },
-    {
       "id": "soft-guzheng-start",
       "file": "sounds/soft-guzheng-start.wav",
       "name": {
@@ -657,20 +607,20 @@
       "group": "soft",
       "tags": [
         "two-note",
-        "bright"
+        "soft"
       ],
-      "duration": 0.584,
-      "audible": 0.553,
+      "duration": 0.593,
+      "audible": 0.56,
       "desc": {
         "en": "Soft two-note guzheng cue",
-        "zh": "古筝拨弦，按弦后音高微微落定"
+        "zh": "柔化的古筝拨弦，不那么写实"
       },
       "uses": [
         "record.start",
         "start"
       ],
       "pair": "soft-guzheng-stop",
-      "sha256": "02fe513acf6668cc633e84e033fb1bde5e8c0edd716a5fd76949127cf031819e"
+      "sha256": "64fd705ddcd7dc75296e73285c5fb4a0b7ef183dfc264751d9a988e54d9afd66"
     },
     {
       "id": "soft-guzheng-stop",
@@ -682,20 +632,20 @@
       "group": "soft",
       "tags": [
         "two-note",
-        "bright"
+        "soft"
       ],
-      "duration": 0.58,
-      "audible": 0.539,
+      "duration": 0.59,
+      "audible": 0.545,
       "desc": {
         "en": "Soft two-note guzheng cue",
-        "zh": "古筝拨弦，按弦后音高微微落定"
+        "zh": "柔化的古筝拨弦，不那么写实"
       },
       "uses": [
         "record.stop",
         "stop"
       ],
       "pair": "soft-guzheng-start",
-      "sha256": "30d8d70022a08d13b040afd5a5a1c3054802656a0eac2dd1578d1a68f029693e"
+      "sha256": "2b15b7517734ea51376fb6efda6942ade1c106f02b30b0e06384d9147b38758c"
     },
     {
       "id": "soft-muted-guitar-start",
@@ -710,18 +660,18 @@
         "short",
         "low"
       ],
-      "duration": 0.515,
-      "audible": 0.485,
+      "duration": 0.505,
+      "audible": 0.462,
       "desc": {
         "en": "Soft two-note muted guitar cue",
-        "zh": "手掌闷住的吉他拨弦，很顿"
+        "zh": "手掌闷住的吉他拨弦，暗、很顿"
       },
       "uses": [
         "record.start",
         "start"
       ],
       "pair": "soft-muted-guitar-stop",
-      "sha256": "ce412f21d92671df76eb02170f6ef6c5f38b6aaeaf12cd240ccdbe99ccc1e673"
+      "sha256": "862e6cc50447a7712d9475661c951a8a7657f695d88e58c7263c3ccbb2f32338"
     },
     {
       "id": "soft-muted-guitar-stop",
@@ -736,18 +686,18 @@
         "short",
         "low"
       ],
-      "duration": 0.543,
-      "audible": 0.492,
+      "duration": 0.497,
+      "audible": 0.457,
       "desc": {
         "en": "Soft two-note muted guitar cue",
-        "zh": "手掌闷住的吉他拨弦，很顿"
+        "zh": "手掌闷住的吉他拨弦，暗、很顿"
       },
       "uses": [
         "record.stop",
         "stop"
       ],
       "pair": "soft-muted-guitar-start",
-      "sha256": "8cafd7ce09d1700eea745fecada2ece9ec970bcc4864b1fdf43a6fbbdd629725"
+      "sha256": "1e4d9a9b1f69b2ec3a9b86921a2d2c3ca80b462932d304da3f696c53abdaa78a"
     },
     {
       "id": "soft-toy-piano-start",
