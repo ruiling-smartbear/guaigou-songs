@@ -1,0 +1,1110 @@
+{
+  "schema": "actnow.sounds.catalog/1",
+  "version": "2026-11-18",
+  "groups": [
+    {
+      "id": "soft",
+      "name": {
+        "en": "Soft",
+        "zh": "柔和"
+      }
+    }
+  ],
+  "tags": [
+    {
+      "id": "two-note",
+      "name": {
+        "en": "Two-note",
+        "zh": "双音"
+      },
+      "featured": true
+    },
+    {
+      "id": "soft",
+      "name": {
+        "en": "Soft",
+        "zh": "柔和"
+      },
+      "featured": true
+    },
+    {
+      "id": "short",
+      "name": {
+        "en": "Short",
+        "zh": "短促"
+      }
+    },
+    {
+      "id": "low",
+      "name": {
+        "en": "Low",
+        "zh": "低沉"
+      }
+    },
+    {
+      "id": "wood",
+      "name": {
+        "en": "Wood",
+        "zh": "木质"
+      }
+    },
+    {
+      "id": "bright",
+      "name": {
+        "en": "Bright",
+        "zh": "清亮"
+      }
+    }
+  ],
+  "uses": [
+    {
+      "id": "record.start",
+      "name": {
+        "en": "Recording starts",
+        "zh": "开始录音"
+      }
+    },
+    {
+      "id": "record.stop",
+      "name": {
+        "en": "Recording stops",
+        "zh": "结束录音"
+      }
+    },
+    {
+      "id": "start",
+      "name": {
+        "en": "Start",
+        "zh": "开始"
+      }
+    },
+    {
+      "id": "stop",
+      "name": {
+        "en": "Stop",
+        "zh": "结束"
+      }
+    }
+  ],
+  "sounds": [
+    {
+      "id": "soft-wood-start",
+      "file": "sounds/soft-wood-start.wav",
+      "name": {
+        "en": "Wood (start)",
+        "zh": "木琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "wood"
+      ],
+      "duration": 0.548,
+      "audible": 0.479,
+      "desc": {
+        "en": "Soft two-note wood cue",
+        "zh": "软槌木琴"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-wood-stop",
+      "sha256": "3f379b334010d9f0e37eae813cc58fbae6e1da7fb09c6cfd156c96363831050a"
+    },
+    {
+      "id": "soft-wood-stop",
+      "file": "sounds/soft-wood-stop.wav",
+      "name": {
+        "en": "Wood (stop)",
+        "zh": "木琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "wood"
+      ],
+      "duration": 0.527,
+      "audible": 0.483,
+      "desc": {
+        "en": "Soft two-note wood cue",
+        "zh": "软槌木琴"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-wood-start",
+      "sha256": "609ca83df81b4cfd9963dd0d557bff193a1a522ab3193064fd311232dc122ba5"
+    },
+    {
+      "id": "soft-rhodes-start",
+      "file": "sounds/soft-rhodes-start.wav",
+      "name": {
+        "en": "Rhodes (start)",
+        "zh": "电钢琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.66,
+      "audible": 0.625,
+      "desc": {
+        "en": "Soft two-note rhodes cue",
+        "zh": "Rhodes 电钢琴，圆润"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-rhodes-stop",
+      "sha256": "b77db6383b6dda8f796e14c6810cebd6a1c301c6e8bd446a2beaeea7f45b5d15"
+    },
+    {
+      "id": "soft-rhodes-stop",
+      "file": "sounds/soft-rhodes-stop.wav",
+      "name": {
+        "en": "Rhodes (stop)",
+        "zh": "电钢琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.666,
+      "audible": 0.626,
+      "desc": {
+        "en": "Soft two-note rhodes cue",
+        "zh": "Rhodes 电钢琴，圆润"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-rhodes-start",
+      "sha256": "f76a4f8e29c498db9a8740e2fef53381788fab640c4c9ca23a189dd20c9bba27"
+    },
+    {
+      "id": "soft-vibes-start",
+      "file": "sounds/soft-vibes-start.wav",
+      "name": {
+        "en": "Vibraphone (start)",
+        "zh": "颤音琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.609,
+      "audible": 0.57,
+      "desc": {
+        "en": "Soft two-note vibraphone cue",
+        "zh": "毛线槌颤音琴，带轻微颤动"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-vibes-stop",
+      "sha256": "7307b56b838044a3a8b7a749f0970bac9a3080bcbe3147683cb14f75c4f3cfc5"
+    },
+    {
+      "id": "soft-vibes-stop",
+      "file": "sounds/soft-vibes-stop.wav",
+      "name": {
+        "en": "Vibraphone (stop)",
+        "zh": "颤音琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.663,
+      "audible": 0.613,
+      "desc": {
+        "en": "Soft two-note vibraphone cue",
+        "zh": "毛线槌颤音琴，带轻微颤动"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-vibes-start",
+      "sha256": "6a1d97b0104034f079d9165af416856da9214c3eaedaa5846d55c48fb8c355c9"
+    },
+    {
+      "id": "soft-bowl-start",
+      "file": "sounds/soft-bowl-start.wav",
+      "name": {
+        "en": "Singing Bowl (start)",
+        "zh": "颂钵（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.647,
+      "audible": 0.566,
+      "desc": {
+        "en": "Soft two-note singing bowl cue",
+        "zh": "木棒轻敲颂钵，有金属共振"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-bowl-stop",
+      "sha256": "fd4f915b4430eeee2bd3b41d11bd4c842153bf4cfcf1ed9e9349baf9a2a86f06"
+    },
+    {
+      "id": "soft-bowl-stop",
+      "file": "sounds/soft-bowl-stop.wav",
+      "name": {
+        "en": "Singing Bowl (stop)",
+        "zh": "颂钵（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.672,
+      "audible": 0.617,
+      "desc": {
+        "en": "Soft two-note singing bowl cue",
+        "zh": "木棒轻敲颂钵，有金属共振"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-bowl-start",
+      "sha256": "ef0f8a551f900781be57793ee6dc6e4ff13f5b9647346568f710d3aad50f687d"
+    },
+    {
+      "id": "soft-woodblock-start",
+      "file": "sounds/soft-woodblock-start.wav",
+      "name": {
+        "en": "Wood Block (start)",
+        "zh": "木鱼（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "wood",
+        "short"
+      ],
+      "duration": 0.528,
+      "audible": 0.48,
+      "desc": {
+        "en": "Soft two-note wood block cue",
+        "zh": "最“顿”、最短"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-woodblock-stop",
+      "sha256": "09721a8683688f2c0620cdffa2617c6ede17e28b152cefb6d629131c9f688225"
+    },
+    {
+      "id": "soft-woodblock-stop",
+      "file": "sounds/soft-woodblock-stop.wav",
+      "name": {
+        "en": "Wood Block (stop)",
+        "zh": "木鱼（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "wood",
+        "short"
+      ],
+      "duration": 0.422,
+      "audible": 0.395,
+      "desc": {
+        "en": "Soft two-note wood block cue",
+        "zh": "最“顿”、最短"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-woodblock-start",
+      "sha256": "f403a486f20afc9393db20d1a7b4c6c5e7a1e6903609b75729d8b22b0d2f7795"
+    },
+    {
+      "id": "soft-musicbox-start",
+      "file": "sounds/soft-musicbox-start.wav",
+      "name": {
+        "en": "Music Box (start)",
+        "zh": "八音盒（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright"
+      ],
+      "duration": 0.599,
+      "audible": 0.566,
+      "desc": {
+        "en": "Soft two-note music box cue",
+        "zh": "八音盒，清亮"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-musicbox-stop",
+      "sha256": "18a4ef32d7c4c9e4d52e6ebf8c31ebf8778d433dc2dec4603a9bc878ccde1152"
+    },
+    {
+      "id": "soft-musicbox-stop",
+      "file": "sounds/soft-musicbox-stop.wav",
+      "name": {
+        "en": "Music Box (stop)",
+        "zh": "八音盒（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright"
+      ],
+      "duration": 0.57,
+      "audible": 0.506,
+      "desc": {
+        "en": "Soft two-note music box cue",
+        "zh": "八音盒，清亮"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-musicbox-start",
+      "sha256": "93c848ab0d0c4f4d7fca8f435ab855753814dbd30773489b79438235fba06705"
+    },
+    {
+      "id": "soft-kalimba-start",
+      "file": "sounds/soft-kalimba-start.wav",
+      "name": {
+        "en": "Kalimba (start)",
+        "zh": "卡林巴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.595,
+      "audible": 0.537,
+      "desc": {
+        "en": "Soft two-note kalimba cue",
+        "zh": "拨片"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-kalimba-stop",
+      "sha256": "a3906ee221e2f535cdeddfe1fb5768c49dd62b3c82cc2ae5455615c81aed94d2"
+    },
+    {
+      "id": "soft-kalimba-stop",
+      "file": "sounds/soft-kalimba-stop.wav",
+      "name": {
+        "en": "Kalimba (stop)",
+        "zh": "卡林巴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.575,
+      "audible": 0.548,
+      "desc": {
+        "en": "Soft two-note kalimba cue",
+        "zh": "拨片"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-kalimba-start",
+      "sha256": "46be475c82e88feafc8d92d5dba87323e21097cfdaf0de11cfce319cf089a0b6"
+    },
+    {
+      "id": "soft-celesta-start",
+      "file": "sounds/soft-celesta-start.wav",
+      "name": {
+        "en": "Celesta (start)",
+        "zh": "钢片琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright",
+        "short"
+      ],
+      "duration": 0.556,
+      "audible": 0.52,
+      "desc": {
+        "en": "Soft two-note celesta cue",
+        "zh": "轻巧的小铃声"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-celesta-stop",
+      "sha256": "4890b89b27a9db231b7997cd6c21121cc05968067f1998d20c472149828d50cc"
+    },
+    {
+      "id": "soft-celesta-stop",
+      "file": "sounds/soft-celesta-stop.wav",
+      "name": {
+        "en": "Celesta (stop)",
+        "zh": "钢片琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright",
+        "short"
+      ],
+      "duration": 0.555,
+      "audible": 0.515,
+      "desc": {
+        "en": "Soft two-note celesta cue",
+        "zh": "轻巧的小铃声"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-celesta-start",
+      "sha256": "9676ac1ced58ccaae74d440e71f0407ced723b0314aac87ad52ed22bd45805ea"
+    },
+    {
+      "id": "soft-glock-start",
+      "file": "sounds/soft-glock-start.wav",
+      "name": {
+        "en": "Glockenspiel (start)",
+        "zh": "钟琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright",
+        "short"
+      ],
+      "duration": 0.544,
+      "audible": 0.51,
+      "desc": {
+        "en": "Soft two-note glockenspiel cue",
+        "zh": "软槌钟琴，清脆"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-glock-stop",
+      "sha256": "1bf480340d185f14c42c4a26be00a9bb073db10ac7df395da48610cd82d0edf2"
+    },
+    {
+      "id": "soft-glock-stop",
+      "file": "sounds/soft-glock-stop.wav",
+      "name": {
+        "en": "Glockenspiel (stop)",
+        "zh": "钟琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright",
+        "short"
+      ],
+      "duration": 0.577,
+      "audible": 0.534,
+      "desc": {
+        "en": "Soft two-note glockenspiel cue",
+        "zh": "软槌钟琴，清脆"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-glock-start",
+      "sha256": "3e4860b444733f07a221b9a4a9849296104a9a095068a67bef65bd9c7bd8f806"
+    },
+    {
+      "id": "soft-xylophone-start",
+      "file": "sounds/soft-xylophone-start.wav",
+      "name": {
+        "en": "Xylophone (start)",
+        "zh": "木片琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "wood",
+        "short"
+      ],
+      "duration": 0.487,
+      "audible": 0.438,
+      "desc": {
+        "en": "Soft two-note xylophone cue",
+        "zh": "短促轻快的木头声"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-xylophone-stop",
+      "sha256": "9a56e93947ad27db43192261624478b777c45ec631f497839e3c15ac0256f3c0"
+    },
+    {
+      "id": "soft-xylophone-stop",
+      "file": "sounds/soft-xylophone-stop.wav",
+      "name": {
+        "en": "Xylophone (stop)",
+        "zh": "木片琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "wood",
+        "short"
+      ],
+      "duration": 0.453,
+      "audible": 0.417,
+      "desc": {
+        "en": "Soft two-note xylophone cue",
+        "zh": "短促轻快的木头声"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-xylophone-start",
+      "sha256": "1fcf906180993d3be743f466e9bed8acc155c1a2090047cfe2459f761798f067"
+    },
+    {
+      "id": "soft-steeldrum-start",
+      "file": "sounds/soft-steeldrum-start.wav",
+      "name": {
+        "en": "Steel Drum (start)",
+        "zh": "钢鼓（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "short"
+      ],
+      "duration": 0.546,
+      "audible": 0.514,
+      "desc": {
+        "en": "Soft two-note steel drum cue",
+        "zh": "圆润有弹性"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-steeldrum-stop",
+      "sha256": "e2db00d8a0dad6f86ab8c8aff7b02a3db8710c1c962a159e3dba47213ac6474a"
+    },
+    {
+      "id": "soft-steeldrum-stop",
+      "file": "sounds/soft-steeldrum-stop.wav",
+      "name": {
+        "en": "Steel Drum (stop)",
+        "zh": "钢鼓（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "short"
+      ],
+      "duration": 0.535,
+      "audible": 0.495,
+      "desc": {
+        "en": "Soft two-note steel drum cue",
+        "zh": "圆润有弹性"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-steeldrum-start",
+      "sha256": "70f9cea1e8930a4b5dd59219662b3e57e63fec0aa9e62cfbcb8a4502f2c7c987"
+    },
+    {
+      "id": "soft-pizzicato-start",
+      "file": "sounds/soft-pizzicato-start.wav",
+      "name": {
+        "en": "Pizzicato (start)",
+        "zh": "拨弦提琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "short"
+      ],
+      "duration": 0.57,
+      "audible": 0.537,
+      "desc": {
+        "en": "Soft two-note pizzicato cue",
+        "zh": "提琴拨弦，干净利落"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-pizzicato-stop",
+      "sha256": "f6d8fa65559c6fec36064859e4c019c949860f9b0428da4e7a54c1fbc87baa67"
+    },
+    {
+      "id": "soft-pizzicato-stop",
+      "file": "sounds/soft-pizzicato-stop.wav",
+      "name": {
+        "en": "Pizzicato (stop)",
+        "zh": "拨弦提琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "short"
+      ],
+      "duration": 0.616,
+      "audible": 0.574,
+      "desc": {
+        "en": "Soft two-note pizzicato cue",
+        "zh": "提琴拨弦，干净利落"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-pizzicato-start",
+      "sha256": "2411ebfce197fc649c30d0cc0d657d68be492d2391f1983da3ff88923f1102e9"
+    },
+    {
+      "id": "soft-guzheng-start",
+      "file": "sounds/soft-guzheng-start.wav",
+      "name": {
+        "en": "Guzheng (start)",
+        "zh": "古筝（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright"
+      ],
+      "duration": 0.584,
+      "audible": 0.553,
+      "desc": {
+        "en": "Soft two-note guzheng cue",
+        "zh": "古筝拨弦，按弦后音高微微落定"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-guzheng-stop",
+      "sha256": "02fe513acf6668cc633e84e033fb1bde5e8c0edd716a5fd76949127cf031819e"
+    },
+    {
+      "id": "soft-guzheng-stop",
+      "file": "sounds/soft-guzheng-stop.wav",
+      "name": {
+        "en": "Guzheng (stop)",
+        "zh": "古筝（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright"
+      ],
+      "duration": 0.58,
+      "audible": 0.539,
+      "desc": {
+        "en": "Soft two-note guzheng cue",
+        "zh": "古筝拨弦，按弦后音高微微落定"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-guzheng-start",
+      "sha256": "30d8d70022a08d13b040afd5a5a1c3054802656a0eac2dd1578d1a68f029693e"
+    },
+    {
+      "id": "soft-muted-guitar-start",
+      "file": "sounds/soft-muted-guitar-start.wav",
+      "name": {
+        "en": "Muted Guitar (start)",
+        "zh": "闷音吉他（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "short",
+        "low"
+      ],
+      "duration": 0.515,
+      "audible": 0.485,
+      "desc": {
+        "en": "Soft two-note muted guitar cue",
+        "zh": "手掌闷住的吉他拨弦，很顿"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-muted-guitar-stop",
+      "sha256": "ce412f21d92671df76eb02170f6ef6c5f38b6aaeaf12cd240ccdbe99ccc1e673"
+    },
+    {
+      "id": "soft-muted-guitar-stop",
+      "file": "sounds/soft-muted-guitar-stop.wav",
+      "name": {
+        "en": "Muted Guitar (stop)",
+        "zh": "闷音吉他（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "short",
+        "low"
+      ],
+      "duration": 0.543,
+      "audible": 0.492,
+      "desc": {
+        "en": "Soft two-note muted guitar cue",
+        "zh": "手掌闷住的吉他拨弦，很顿"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-muted-guitar-start",
+      "sha256": "8cafd7ce09d1700eea745fecada2ece9ec970bcc4864b1fdf43a6fbbdd629725"
+    },
+    {
+      "id": "soft-toy-piano-start",
+      "file": "sounds/soft-toy-piano-start.wav",
+      "name": {
+        "en": "Toy Piano (start)",
+        "zh": "玩具钢琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright",
+        "short"
+      ],
+      "duration": 0.514,
+      "audible": 0.463,
+      "desc": {
+        "en": "Soft two-note toy piano cue",
+        "zh": "可爱的小金属棒"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-toy-piano-stop",
+      "sha256": "0ecfe11cc253da366a6d4176ce788d049fdc5e0a2393abe53bac19a6febaf0d7"
+    },
+    {
+      "id": "soft-toy-piano-stop",
+      "file": "sounds/soft-toy-piano-stop.wav",
+      "name": {
+        "en": "Toy Piano (stop)",
+        "zh": "玩具钢琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright",
+        "short"
+      ],
+      "duration": 0.519,
+      "audible": 0.465,
+      "desc": {
+        "en": "Soft two-note toy piano cue",
+        "zh": "可爱的小金属棒"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-toy-piano-start",
+      "sha256": "8e4e1d5594003fca8aa03af821099d4cba5d55b09e9c59d622048dc86a081846"
+    },
+    {
+      "id": "soft-bamboo-start",
+      "file": "sounds/soft-bamboo-start.wav",
+      "name": {
+        "en": "Bamboo (start)",
+        "zh": "竹琴（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "wood",
+        "short"
+      ],
+      "duration": 0.516,
+      "audible": 0.49,
+      "desc": {
+        "en": "Soft two-note bamboo cue",
+        "zh": "空心竹子的笃笃声"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-bamboo-stop",
+      "sha256": "9b69804b0bbb23215d3452f71ddd5c40f4cd9e56c23a6a5dcc64ec512c1234ec"
+    },
+    {
+      "id": "soft-bamboo-stop",
+      "file": "sounds/soft-bamboo-stop.wav",
+      "name": {
+        "en": "Bamboo (stop)",
+        "zh": "竹琴（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "wood",
+        "short"
+      ],
+      "duration": 0.474,
+      "audible": 0.445,
+      "desc": {
+        "en": "Soft two-note bamboo cue",
+        "zh": "空心竹子的笃笃声"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-bamboo-start",
+      "sha256": "a22accad43ae8876d5d3138019425f79e25dfbdad374737690e7ff340f411544"
+    },
+    {
+      "id": "soft-ocarina-start",
+      "file": "sounds/soft-ocarina-start.wav",
+      "name": {
+        "en": "Ocarina (start)",
+        "zh": "陶笛（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.635,
+      "audible": 0.581,
+      "desc": {
+        "en": "Soft two-note ocarina cue",
+        "zh": "带气声的圆润笛音"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-ocarina-stop",
+      "sha256": "5939440abb0e72d34380eb348995f3f57cd6e499d74e2f2c5edaa13d0d1926a9"
+    },
+    {
+      "id": "soft-ocarina-stop",
+      "file": "sounds/soft-ocarina-stop.wav",
+      "name": {
+        "en": "Ocarina (stop)",
+        "zh": "陶笛（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.663,
+      "audible": 0.608,
+      "desc": {
+        "en": "Soft two-note ocarina cue",
+        "zh": "带气声的圆润笛音"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-ocarina-start",
+      "sha256": "6b2d448723972c1e8a2f0167a0660c608e915c918935e460be557a8ba9435e3a"
+    },
+    {
+      "id": "soft-synth-pluck-start",
+      "file": "sounds/soft-synth-pluck-start.wav",
+      "name": {
+        "en": "Synth Pluck (start)",
+        "zh": "合成拨音（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "short"
+      ],
+      "duration": 0.508,
+      "audible": 0.47,
+      "desc": {
+        "en": "Soft two-note synth pluck cue",
+        "zh": "现代 UI 风格的拨音，带轻微合唱感"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-synth-pluck-stop",
+      "sha256": "e0a94cdafe8366eac3d71310cdbf39cdcd192b6419b12563e342052ff9d26d10"
+    },
+    {
+      "id": "soft-synth-pluck-stop",
+      "file": "sounds/soft-synth-pluck-stop.wav",
+      "name": {
+        "en": "Synth Pluck (stop)",
+        "zh": "合成拨音（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "short"
+      ],
+      "duration": 0.462,
+      "audible": 0.431,
+      "desc": {
+        "en": "Soft two-note synth pluck cue",
+        "zh": "现代 UI 风格的拨音，带轻微合唱感"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-synth-pluck-start",
+      "sha256": "6fb4adce0029092f30779bf65c3f77a2ca8f6c56017fc03d2256f5054655d4ba"
+    },
+    {
+      "id": "soft-agogo-start",
+      "file": "sounds/soft-agogo-start.wav",
+      "name": {
+        "en": "Agogo (start)",
+        "zh": "阿哥哥铃（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright",
+        "short"
+      ],
+      "duration": 0.505,
+      "audible": 0.475,
+      "desc": {
+        "en": "Soft two-note agogo cue",
+        "zh": "高低双铃，轻快"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-agogo-stop",
+      "sha256": "5d4166eca0e4206a70b0e5d4b61202cc49bb5740653d02064e044228cef8ecfe"
+    },
+    {
+      "id": "soft-agogo-stop",
+      "file": "sounds/soft-agogo-stop.wav",
+      "name": {
+        "en": "Agogo (stop)",
+        "zh": "阿哥哥铃（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "bright",
+        "short"
+      ],
+      "duration": 0.461,
+      "audible": 0.414,
+      "desc": {
+        "en": "Soft two-note agogo cue",
+        "zh": "高低双铃，轻快"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-agogo-start",
+      "sha256": "5459f9aeb4cbfdf8b770b37d29e5619e6b79caa7d6916865eb3a6ea76d71be96"
+    },
+    {
+      "id": "soft-bloom-start",
+      "file": "sounds/soft-bloom-start.wav",
+      "name": {
+        "en": "Bloom (start)",
+        "zh": "和弦绽放（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.62,
+      "audible": 0.584,
+      "desc": {
+        "en": "Soft two-note bloom cue",
+        "zh": "电钢琴三和弦，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-bloom-stop",
+      "sha256": "42ab10349b76a9c0b338d0b5c0f79fa7b50fd89a307352dcebd73cfe990c2840"
+    },
+    {
+      "id": "soft-bloom-stop",
+      "file": "sounds/soft-bloom-stop.wav",
+      "name": {
+        "en": "Bloom (stop)",
+        "zh": "和弦绽放（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft"
+      ],
+      "duration": 0.609,
+      "audible": 0.574,
+      "desc": {
+        "en": "Soft two-note bloom cue",
+        "zh": "电钢琴三和弦，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-bloom-start",
+      "sha256": "f5bdec51e8fb553a3af301fe1a09cc8cbe2f19c53b73d063a211fa01dc362bd3"
+    }
+  ],
+  "notice": "Soft two-note cues: original synthesized sounds."
+}
