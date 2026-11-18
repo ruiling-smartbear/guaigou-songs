@@ -856,54 +856,316 @@
       "sha256": "cf3779da3f2bac5f9d6ef57541affe79cff8d6443834bc0a91510ea018852e72"
     },
     {
-      "id": "soft-bloom-start",
-      "file": "sounds/soft-bloom-start.wav",
+      "id": "soft-bloom-1-start",
+      "file": "sounds/soft-bloom-1-start.wav",
       "name": {
-        "en": "Bloom (start)",
-        "zh": "和弦绽放（开始）"
+        "en": "Bloom 1 (start)",
+        "zh": "和弦绽放 1（开始）"
       },
       "group": "soft",
       "tags": [
         "two-note",
-        "soft"
+        "soft",
+        "bloom"
       ],
       "duration": 0.685,
       "audible": 0.649,
       "desc": {
-        "en": "Soft two-note bloom cue",
-        "zh": "电钢琴三和弦，开始往上滚、结束往下滚"
+        "en": "Soft two-note bloom 1 cue",
+        "zh": "和弦 C，开始往上滚、结束往下滚"
       },
       "uses": [
         "record.start",
         "start"
       ],
-      "pair": "soft-bloom-stop",
+      "pair": "soft-bloom-1-stop",
       "sha256": "22fa4f7ecd1355e43e4c545366866ec6f02614f37c58ba1b6d123c5ef182ee99"
     },
     {
-      "id": "soft-bloom-stop",
-      "file": "sounds/soft-bloom-stop.wav",
+      "id": "soft-bloom-1-stop",
+      "file": "sounds/soft-bloom-1-stop.wav",
       "name": {
-        "en": "Bloom (stop)",
-        "zh": "和弦绽放（结束）"
+        "en": "Bloom 1 (stop)",
+        "zh": "和弦绽放 1（结束）"
       },
       "group": "soft",
       "tags": [
         "two-note",
-        "soft"
+        "soft",
+        "bloom"
       ],
-      "duration": 0.68,
-      "audible": 0.647,
+      "duration": 0.674,
+      "audible": 0.641,
       "desc": {
-        "en": "Soft two-note bloom cue",
-        "zh": "电钢琴三和弦，开始往上滚、结束往下滚"
+        "en": "Soft two-note bloom 1 cue",
+        "zh": "和弦 C，开始往上滚、结束往下滚"
       },
       "uses": [
         "record.stop",
         "stop"
       ],
-      "pair": "soft-bloom-start",
-      "sha256": "6eed6449c1fbb46c4bb2ad4fd7639950d2b4093602a167758be3569b92837214"
+      "pair": "soft-bloom-1-start",
+      "sha256": "8c8c7e331e911493c098bc13e4d26c5b41cc0e4c96bc637fbef8bf7acfa48074"
+    },
+    {
+      "id": "soft-bloom-2-start",
+      "file": "sounds/soft-bloom-2-start.wav",
+      "name": {
+        "en": "Bloom 2 (start)",
+        "zh": "和弦绽放 2（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.66,
+      "audible": 0.623,
+      "desc": {
+        "en": "Soft two-note bloom 2 cue",
+        "zh": "和弦 F，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-bloom-2-stop",
+      "sha256": "57252c32475c76b17d9e1b502041bf887a65f6fbf607d2cedc1dd11bb157a293"
+    },
+    {
+      "id": "soft-bloom-2-stop",
+      "file": "sounds/soft-bloom-2-stop.wav",
+      "name": {
+        "en": "Bloom 2 (stop)",
+        "zh": "和弦绽放 2（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.665,
+      "audible": 0.632,
+      "desc": {
+        "en": "Soft two-note bloom 2 cue",
+        "zh": "和弦 F，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-bloom-2-start",
+      "sha256": "69f37d250c02d72965db8c75e8aec3e773b8e608827bfec4aa481d6673e5bb76"
+    },
+    {
+      "id": "soft-bloom-3-start",
+      "file": "sounds/soft-bloom-3-start.wav",
+      "name": {
+        "en": "Bloom 3 (start)",
+        "zh": "和弦绽放 3（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.666,
+      "audible": 0.627,
+      "desc": {
+        "en": "Soft two-note bloom 3 cue",
+        "zh": "和弦 G，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-bloom-3-stop",
+      "sha256": "99a43f49ecd5b89c25259cb33339da942dd310cd2f8bea43e03b75f6d937e363"
+    },
+    {
+      "id": "soft-bloom-3-stop",
+      "file": "sounds/soft-bloom-3-stop.wav",
+      "name": {
+        "en": "Bloom 3 (stop)",
+        "zh": "和弦绽放 3（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.641,
+      "audible": 0.61,
+      "desc": {
+        "en": "Soft two-note bloom 3 cue",
+        "zh": "和弦 G，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-bloom-3-start",
+      "sha256": "bde950ee7163fffa7dbe4b5de31002d2f5848178f5de4ac99980228806b83af2"
+    },
+    {
+      "id": "soft-bloom-4-start",
+      "file": "sounds/soft-bloom-4-start.wav",
+      "name": {
+        "en": "Bloom 4 (start)",
+        "zh": "和弦绽放 4（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.657,
+      "audible": 0.618,
+      "desc": {
+        "en": "Soft two-note bloom 4 cue",
+        "zh": "和弦 Am，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-bloom-4-stop",
+      "sha256": "865fd11b4c2a07eac6265f1860cdfd9288321977e5c81745f05f986956dcd9ad"
+    },
+    {
+      "id": "soft-bloom-4-stop",
+      "file": "sounds/soft-bloom-4-stop.wav",
+      "name": {
+        "en": "Bloom 4 (stop)",
+        "zh": "和弦绽放 4（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.661,
+      "audible": 0.63,
+      "desc": {
+        "en": "Soft two-note bloom 4 cue",
+        "zh": "和弦 Am，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-bloom-4-start",
+      "sha256": "d95f5e4a29488aa008211c1e13b379fd15d9ea16a5c0feeccdfa413f0260fcaa"
+    },
+    {
+      "id": "soft-bloom-5-start",
+      "file": "sounds/soft-bloom-5-start.wav",
+      "name": {
+        "en": "Bloom 5 (start)",
+        "zh": "和弦绽放 5（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.714,
+      "audible": 0.677,
+      "desc": {
+        "en": "Soft two-note bloom 5 cue",
+        "zh": "和弦 Fmaj7，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-bloom-5-stop",
+      "sha256": "2f281c6f4ec960eb4e7b163c437711ba6298fb0c309cf892433a724ad9cfe370"
+    },
+    {
+      "id": "soft-bloom-5-stop",
+      "file": "sounds/soft-bloom-5-stop.wav",
+      "name": {
+        "en": "Bloom 5 (stop)",
+        "zh": "和弦绽放 5（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.725,
+      "audible": 0.692,
+      "desc": {
+        "en": "Soft two-note bloom 5 cue",
+        "zh": "和弦 Fmaj7，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-bloom-5-start",
+      "sha256": "b8a3dd0bf654aaf157e88a8a1c8b13860d77557530a8553c6a8dfb151f464086"
+    },
+    {
+      "id": "soft-bloom-6-start",
+      "file": "sounds/soft-bloom-6-start.wav",
+      "name": {
+        "en": "Bloom 6 (start)",
+        "zh": "和弦绽放 6（开始）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.722,
+      "audible": 0.683,
+      "desc": {
+        "en": "Soft two-note bloom 6 cue",
+        "zh": "和弦 Cmaj7，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.start",
+        "start"
+      ],
+      "pair": "soft-bloom-6-stop",
+      "sha256": "6bfdf8bb03fdd179d44c92e8d21f1b6352921aa8b66789ebe4c8944dac9d3cc7"
+    },
+    {
+      "id": "soft-bloom-6-stop",
+      "file": "sounds/soft-bloom-6-stop.wav",
+      "name": {
+        "en": "Bloom 6 (stop)",
+        "zh": "和弦绽放 6（结束）"
+      },
+      "group": "soft",
+      "tags": [
+        "two-note",
+        "soft",
+        "bloom"
+      ],
+      "duration": 0.729,
+      "audible": 0.693,
+      "desc": {
+        "en": "Soft two-note bloom 6 cue",
+        "zh": "和弦 Cmaj7，开始往上滚、结束往下滚"
+      },
+      "uses": [
+        "record.stop",
+        "stop"
+      ],
+      "pair": "soft-bloom-6-start",
+      "sha256": "3a1fb9ebc76a247173307fa014c2617ed05556b231fb2b0eb2554a2cde62d747"
     }
   ],
   "notice": "Soft two-note cues: original synthesized sounds."
