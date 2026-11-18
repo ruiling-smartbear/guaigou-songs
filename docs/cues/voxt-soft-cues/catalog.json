@@ -378,8 +378,8 @@
         "two-note",
         "soft"
       ],
-      "duration": 0.626,
-      "audible": 0.591,
+      "duration": 0.604,
+      "audible": 0.564,
       "desc": {
         "en": "Soft two-note kalimba cue",
         "zh": "拨片"
@@ -389,7 +389,7 @@
         "stop"
       ],
       "pair": "soft-kalimba-start",
-      "sha256": "4e278d0efd221f5351b99f79e746146347c869536dd1101b43bf5c3b79df3455"
+      "sha256": "479c9154e94abe6a75d1e342dfbb323089bad71d9960799004454c6074c14534"
     },
     {
       "id": "soft-celesta-start",
