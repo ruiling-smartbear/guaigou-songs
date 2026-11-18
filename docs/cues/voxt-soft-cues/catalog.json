@@ -738,8 +738,8 @@
         "bright",
         "short"
       ],
-      "duration": 0.506,
-      "audible": 0.472,
+      "duration": 0.562,
+      "audible": 0.53,
       "desc": {
         "en": "Soft two-note toy piano cue",
         "zh": "可爱的小金属棒"
@@ -749,7 +749,7 @@
         "stop"
       ],
       "pair": "soft-toy-piano-start",
-      "sha256": "fd7f934fb485551c085affed6520ba0b29cbf56d9c32e915e827420f3f69ca5f"
+      "sha256": "addc9f7aad00f6d9e14e2aab9927656503a0f4ce0dbc1c8608212f08d0140db6"
     },
     {
       "id": "soft-bamboo-start",
@@ -802,106 +802,6 @@
       ],
       "pair": "soft-bamboo-start",
       "sha256": "075ce22190f138857918a176d31c78bb2118308bc6325c8fa2598e92510bff86"
-    },
-    {
-      "id": "soft-ocarina-start",
-      "file": "sounds/soft-ocarina-start.wav",
-      "name": {
-        "en": "Ocarina (start)",
-        "zh": "陶笛（开始）"
-      },
-      "group": "soft",
-      "tags": [
-        "two-note",
-        "soft"
-      ],
-      "duration": 0.674,
-      "audible": 0.642,
-      "desc": {
-        "en": "Soft two-note ocarina cue",
-        "zh": "带气声的圆润笛音"
-      },
-      "uses": [
-        "record.start",
-        "start"
-      ],
-      "pair": "soft-ocarina-stop",
-      "sha256": "a6eac120c8b886fdf5201e3e22728171bc370f591ea5a0ec67f0dba9c8151a0d"
-    },
-    {
-      "id": "soft-ocarina-stop",
-      "file": "sounds/soft-ocarina-stop.wav",
-      "name": {
-        "en": "Ocarina (stop)",
-        "zh": "陶笛（结束）"
-      },
-      "group": "soft",
-      "tags": [
-        "two-note",
-        "soft"
-      ],
-      "duration": 0.704,
-      "audible": 0.609,
-      "desc": {
-        "en": "Soft two-note ocarina cue",
-        "zh": "带气声的圆润笛音"
-      },
-      "uses": [
-        "record.stop",
-        "stop"
-      ],
-      "pair": "soft-ocarina-start",
-      "sha256": "c3b33d3203bc150a23bc862bd35de18f5f8100e4a621da82b69334000fc585c0"
-    },
-    {
-      "id": "soft-synth-pluck-start",
-      "file": "sounds/soft-synth-pluck-start.wav",
-      "name": {
-        "en": "Synth Pluck (start)",
-        "zh": "合成拨音（开始）"
-      },
-      "group": "soft",
-      "tags": [
-        "two-note",
-        "short"
-      ],
-      "duration": 0.521,
-      "audible": 0.459,
-      "desc": {
-        "en": "Soft two-note synth pluck cue",
-        "zh": "现代 UI 风格的拨音，带轻微合唱感"
-      },
-      "uses": [
-        "record.start",
-        "start"
-      ],
-      "pair": "soft-synth-pluck-stop",
-      "sha256": "d9c0a76f260d01b0d9f221849b745728f4c2398582d41a53c71f916accc27a1f"
-    },
-    {
-      "id": "soft-synth-pluck-stop",
-      "file": "sounds/soft-synth-pluck-stop.wav",
-      "name": {
-        "en": "Synth Pluck (stop)",
-        "zh": "合成拨音（结束）"
-      },
-      "group": "soft",
-      "tags": [
-        "two-note",
-        "short"
-      ],
-      "duration": 0.486,
-      "audible": 0.455,
-      "desc": {
-        "en": "Soft two-note synth pluck cue",
-        "zh": "现代 UI 风格的拨音，带轻微合唱感"
-      },
-      "uses": [
-        "record.stop",
-        "stop"
-      ],
-      "pair": "soft-synth-pluck-start",
-      "sha256": "00778eaeb473ef6652e8fa21f5f82a8eb1c5a75707158402da8cb1130a17ad09"
     },
     {
       "id": "soft-agogo-start",
