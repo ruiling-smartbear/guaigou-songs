@@ -105,6 +105,11 @@ async function route(request, env) {
     throw httpError(404, '没有这个接口');
   }
 
+  // Hearts on the cue listening page (/cues/): open to anyone, one heart per device per sound.
+  if (p === '/api/cues/hearts' && m === 'GET') return json(heartsView(await loadHearts(env), await cueDevice(request, false)));
+  const hh = p.match(/^\/api\/cues\/hearts\/(soft-[a-z0-9-]{1,40})$/);
+  if (hh && m === 'POST') return json(await toggleHeart(env, request, hh[1], (await readJson(request)).on === true));
+
   requireFamily(request, env, url);
   if (p === '/api/quota' && m === 'GET') return json(quotaView(await getQuota(env)));
   if (p === '/api/lyrics' && m === 'POST') {
@@ -751,6 +756,53 @@ async function countPerPerson(env, request) {
 async function sha(text) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
   return [...new Uint8Array(buf)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ---------- cue hearts ----------
+// One small document: { "<cue id>": ["<hashed device>", …] }. Low traffic, so last-write-wins is fine.
+
+const HEARTS_KEY = 'cues/hearts';
+const MAX_HEART_CUES = 200;
+const DAILY_HEART_TAPS_PER_NETWORK = 400;
+
+async function loadHearts(env) {
+  const o = await env.BUCKET.get(HEARTS_KEY);
+  return o ? JSON.parse(await o.text()) : {};
+}
+
+async function cueDevice(request, required) {
+  const d = request.headers.get('X-Device-Id') || '';
+  if (/^[a-z0-9]{16,40}$/.test(d)) return sha('cue:' + d);
+  if (required) throw httpError(400, '缺少设备标识');
+  return '';
+}
+
+function heartsView(hearts, me) {
+  const counts = {}, mine = [];
+  for (const [id, devices] of Object.entries(hearts)) {
+    counts[id] = devices.length;
+    if (me && devices.includes(me)) mine.push(id);
+  }
+  return { counts, mine };
+}
+
+async function toggleHeart(env, request, id, on) {
+  const me = await cueDevice(request, true);
+  const ip = request.headers.get('CF-Connecting-IP') || '';
+  if (ip) {
+    const key = `meta/usage/${new Date().toISOString().slice(0, 10)}/cues/${await sha(ip)}`;
+    const o = await env.BUCKET.get(key);
+    const n = o ? Number(await o.text()) : 0;
+    if (n >= DAILY_HEART_TAPS_PER_NETWORK) throw httpError(429, '今天点得太多啦，明天再来');
+    await env.BUCKET.put(key, String(n + 1));
+  }
+  const hearts = await loadHearts(env);
+  if (!hearts[id] && Object.keys(hearts).length >= MAX_HEART_CUES) throw httpError(400, '没有这个声音');
+  const set = new Set(hearts[id] || []);
+  if (on) set.add(me); else set.delete(me);
+  hearts[id] = [...set];
+  await env.BUCKET.put(HEARTS_KEY, JSON.stringify(hearts));
+  return heartsView(hearts, me);
 }
 
 // ---------- utils ----------

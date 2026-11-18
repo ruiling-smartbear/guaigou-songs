@@ -9,15 +9,18 @@ button{padding:7px 12px;border-radius:8px;border:1px solid #ccc;background:#fff;
 <h2>Voxt 柔和提示音</h2>
 <div class="bar"><span class="d" id="st"></span></div>
 <div id="l"></div><script>
-const R=[{"id": "soft-wood", "name": "木琴 Wood", "desc": "软槌木琴"}, {"id": "soft-vibes", "name": "颤音琴 Vibraphone", "desc": "毛线槌颤音琴，带轻微颤动"}, {"id": "soft-bowl", "name": "颂钵 Singing Bowl", "desc": "木棒轻敲颂钵，有金属共振"}, {"id": "soft-woodblock", "name": "木鱼 Wood Block", "desc": "最“顿”、最短"}, {"id": "soft-musicbox", "name": "八音盒 Music Box", "desc": "八音盒，清亮"}, {"id": "soft-kalimba", "name": "卡林巴 Kalimba", "desc": "拨片"}, {"id": "soft-celesta", "name": "钢片琴 Celesta", "desc": "轻巧的小铃声"}, {"id": "soft-glock", "name": "钟琴 Glockenspiel", "desc": "软槌钟琴，清脆"}, {"id": "soft-xylophone", "name": "木片琴 Xylophone", "desc": "短促轻快的木头声"}, {"id": "soft-steeldrum", "name": "钢鼓 Steel Drum", "desc": "圆润有弹性"}, {"id": "soft-guzheng", "name": "古筝 Guzheng", "desc": "柔化的古筝拨弦，不那么写实"}, {"id": "soft-muted-guitar", "name": "闷音吉他 Muted Guitar", "desc": "手掌闷住的吉他拨弦，暗、很顿"}, {"id": "soft-toy-piano", "name": "玩具钢琴 Toy Piano", "desc": "可爱的小金属棒"}, {"id": "soft-bamboo", "name": "竹琴 Bamboo", "desc": "空心竹子的笃笃声"}, {"id": "soft-agogo", "name": "阿哥哥铃 Agogo", "desc": "高低双铃，轻快"}, {"id": "soft-bloom", "vars": ["soft-bloom-1", "soft-bloom-2", "soft-bloom-3", "soft-bloom-4", "soft-bloom-5", "soft-bloom-6"], "name": "和弦绽放 Bloom", "desc": "每次随机换一个和弦（C、F、G、Am、Fmaj7、Cmaj7），不会连着重复"}], NS='voxt-soft-cues-v1', API='https://abacus.jasoncameron.dev';
+const R=[{"id": "soft-wood", "name": "木琴 Wood", "desc": "软槌木琴"}, {"id": "soft-vibes", "name": "颤音琴 Vibraphone", "desc": "毛线槌颤音琴，带轻微颤动"}, {"id": "soft-bowl", "name": "颂钵 Singing Bowl", "desc": "木棒轻敲颂钵，有金属共振"}, {"id": "soft-woodblock", "name": "木鱼 Wood Block", "desc": "最“顿”、最短"}, {"id": "soft-musicbox", "name": "八音盒 Music Box", "desc": "八音盒，清亮"}, {"id": "soft-kalimba", "name": "卡林巴 Kalimba", "desc": "拨片"}, {"id": "soft-celesta", "name": "钢片琴 Celesta", "desc": "轻巧的小铃声"}, {"id": "soft-glock", "name": "钟琴 Glockenspiel", "desc": "软槌钟琴，清脆"}, {"id": "soft-xylophone", "name": "木片琴 Xylophone", "desc": "短促轻快的木头声"}, {"id": "soft-steeldrum", "name": "钢鼓 Steel Drum", "desc": "圆润有弹性"}, {"id": "soft-guzheng", "name": "古筝 Guzheng", "desc": "柔化的古筝拨弦，不那么写实"}, {"id": "soft-muted-guitar", "name": "闷音吉他 Muted Guitar", "desc": "手掌闷住的吉他拨弦，暗、很顿"}, {"id": "soft-toy-piano", "name": "玩具钢琴 Toy Piano", "desc": "可爱的小金属棒"}, {"id": "soft-bamboo", "name": "竹琴 Bamboo", "desc": "空心竹子的笃笃声"}, {"id": "soft-agogo", "name": "阿哥哥铃 Agogo", "desc": "高低双铃，轻快"}, {"id": "soft-bloom", "vars": ["soft-bloom-1", "soft-bloom-2", "soft-bloom-3", "soft-bloom-4", "soft-bloom-5", "soft-bloom-6"], "name": "和弦绽放 Bloom", "desc": "每次随机换一个和弦（C、F、G、Am、Fmaj7、Cmaj7），不会连着重复"}], API=(/^(localhost|127\.0\.0\.1)$|\.pages\.dev$/.test(location.hostname)?'':'https://guaigou-songs.guaigou.workers.dev')+'/api/cues/hearts';
 let ctx, cur; const buf={};
 const decode=async id=>buf[id]||(buf[id]=await ctx.decodeAudioData(await (await fetch('voxt-soft-cues/sounds/'+id+'.wav')).arrayBuffer()));
 const play=async(id,delay=0)=>{ctx=ctx||new AudioContext();if(ctx.state!=='running')await ctx.resume();
   const b=await decode(id);const s=ctx.createBufferSource();s.buffer=b;s.connect(ctx.destination);
   if(cur&&!delay)try{cur.stop()}catch(e){};s.start(ctx.currentTime+delay);cur=s;window.lastPlayed=id};
-const mine=(()=>{try{return JSON.parse(localStorage.getItem('cueHearts')||'[]')}catch(e){return []}})();
-const save=()=>{try{localStorage.setItem('cueHearts',JSON.stringify(mine))}catch(e){}};
-const count={}, els={};
+const device=(()=>{let d;try{d=localStorage.getItem('cueDevice')}catch(e){}
+  if(!/^[a-z0-9]{16,40}$/.test(d||'')){d=[...crypto.getRandomValues(new Uint8Array(12))].map(b=>b.toString(36).padStart(2,'0')).join('').slice(0,24);try{localStorage.setItem('cueDevice',d)}catch(e){}}return d})();
+const H={'X-Device-Id':device};
+let mine=[]; const count={}, els={};
+const apply=j=>{if(!j||!j.counts)return;for(const r of R)count[r.id]=j.counts[r.id]||0;mine=j.mine||[];R.forEach(r=>show(r.id));total()};
+const total=()=>{const t=R.reduce((s,r)=>s+(count[r.id]||0),0);document.getElementById('st').textContent=`一共 ${t} 颗心`};
 const show=id=>{const b=els[id];if(!b)return;const on=mine.includes(id);b.classList.toggle('on',on);b.textContent=(on?'❤️ ':'♡ ')+(count[id]??'·')};
 for(const r of R){const d=document.createElement('div');d.className='row';d.dataset.id=r.id;
 d.innerHTML=`<div class=n>${r.name}</div><div class=d>${r.desc}</div><div class=b><button>开始</button><button>结束</button><button>开始→结束</button><button class=h>♡ ·</button></div>`;
@@ -25,10 +28,11 @@ const [a,b,c,h]=d.querySelectorAll('button');let last;els[r.id]=h;
 const pick=(fresh)=>{if(!r.vars)return r.id;if(fresh||!last){const o=r.vars.filter(v=>v!==last);last=o[Math.floor(Math.random()*o.length)]}return last};
 a.onclick=()=>play(pick(true)+'-start');b.onclick=()=>play(pick(false)+'-stop');
 c.onclick=async()=>{const v=pick(true);await play(v+'-start');play(v+'-stop',1.0)};
-h.onclick=async()=>{if(mine.includes(r.id))return;mine.push(r.id);save();count[r.id]=(count[r.id]||0)+1;show(r.id);
-  try{const j=await (await fetch(`${API}/hit/${NS}/${r.id}`)).json();if(typeof j.value==='number')count[r.id]=j.value}catch(e){}show(r.id)};
+h.onclick=async()=>{const on=!mine.includes(r.id);
+  mine=on?[...mine,r.id]:mine.filter(x=>x!==r.id);count[r.id]=Math.max(0,(count[r.id]||0)+(on?1:-1));show(r.id);total();
+  try{const res=await fetch(`${API}/${r.id}`,{method:'POST',headers:{...H,'Content-Type':'application/json'},body:JSON.stringify({on})});
+    if(res.ok)apply(await res.json());else throw 0}
+  catch(e){mine=on?mine.filter(x=>x!==r.id):[...mine,r.id];count[r.id]=Math.max(0,(count[r.id]||0)+(on?-1:1));show(r.id);total();alert('没点上，网络不太好，稍后再试')}};
 document.getElementById('l').appendChild(d);show(r.id)}
-// read every count (a sound nobody has hearted yet has no counter: 0)
-Promise.all(R.map(async r=>{try{const res=await fetch(`${API}/get/${NS}/${r.id}`);const j=await res.json();count[r.id]=typeof j.value==='number'?j.value:0}catch(e){}show(r.id)}))
- .then(()=>{const t=R.reduce((s,r)=>s+(count[r.id]||0),0);document.getElementById('st').textContent=`一共 ${t} 颗心`});
+fetch(API,{headers:H}).then(r=>r.json()).then(apply).catch(()=>{});
 </script>
